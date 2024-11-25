@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -46,18 +47,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // To recognize Latin script
-    implementation("com.google.mlkit:text-recognition:16.0.1")
+    // To recognize text scripts
+    implementation(libs.text.recognition)
+    implementation(libs.text.recognition.chinese)
+    implementation(libs.text.recognition.devanagari)
+    implementation(libs.text.recognition.japanese)
+    implementation(libs.text.recognition.korean)
 
-    // To recognize Chinese script
-    implementation("com.google.mlkit:text-recognition-chinese:16.0.1")
-
-    // To recognize Devanagari script
-    implementation("com.google.mlkit:text-recognition-devanagari:16.0.1")
-
-    // To recognize Japanese script
-    implementation("com.google.mlkit:text-recognition-japanese:16.0.1")
-
-    // To recognize Korean script
-    implementation("com.google.mlkit:text-recognition-korean:16.0.1")
+    // Import the Firebase BoM
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 }
