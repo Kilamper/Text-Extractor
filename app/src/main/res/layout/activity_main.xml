@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/cameraImage"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_image_24"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/captureImgBtn"
+        android:text="Capture Image"
+        android:backgroundTint="@color/green"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OCR Text:"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:id="@+id/resultText"
+        android:text=""
+        android:padding="8dp"
+        android:background="@drawable/border"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textAlignment="textStart"
+        android:layout_marginTop="16dp"
+        android:scrollbars="vertical" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/copyTextBtn"
+        android:visibility="invisible"
+        android:text="Copy Text"
+        android:backgroundTint="@color/green"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
