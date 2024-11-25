@@ -28,12 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cameraImage: ImageView
     private lateinit var captureImgBtn: Button
+    private lateinit var selectImgBtn: Button
     private lateinit var resultText: TextView
     private lateinit var copyTextBtn: Button
 
     private var currentPhotoPath: String? = null
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
+    private lateinit var selectImageLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         cameraImage = findViewById(R.id.cameraImage)
         captureImgBtn = findViewById(R.id.captureImgBtn)
+        selectImgBtn = findViewById(R.id.selectImgBtn)
         resultText = findViewById(R.id.resultText)
         copyTextBtn = findViewById(R.id.copyTextBtn)
 
-        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            isGranted ->
+        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
                 captureImage()
             } else {
@@ -53,8 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            success ->
+        takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
                 currentPhotoPath?.let { path ->
                     val bitmap = BitmapFactory.decodeFile(path)
@@ -62,17 +63,29 @@ class MainActivity : AppCompatActivity() {
                     recognizeText(bitmap)
                 }
             }
+        } 
+
+        selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+                cameraImage.setImageBitmap(bitmap)
+                recognizeText(bitmap)
+            }
         }
 
         captureImgBtn.setOnClickListener {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+
+        selectImgBtn.setOnClickListener {
+            selectImageLauncher.launch("image/*")
         }
     }
 
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JEPG_${timeStamp}_", ".jpg", storageDir).apply {
+        return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir).apply {
             currentPhotoPath = absolutePath
         }
     }
