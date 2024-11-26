@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/cameraImage"
+        android:contentDescription="Camera Image"
         android:scaleType="fitCenter"
         android:src="@drawable/baseline_image_24"
         android:layout_marginTop="12dp" />
