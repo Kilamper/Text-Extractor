@@ -1,6 +1,7 @@
 package com.example.textextractor
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -32,12 +33,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resultText: TextView
     private lateinit var copyTextBtn: Button
 
+    private lateinit var menuBtn: Button
+    private lateinit var logInBtn: Button
+
     private var currentPhotoPath: String? = null
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
     private lateinit var selectImageLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // Thread.sleep(2000);
+        setTheme(R.style.Theme_TextExtractor)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -46,6 +54,16 @@ class MainActivity : AppCompatActivity() {
         selectImgBtn = findViewById(R.id.selectImgBtn)
         resultText = findViewById(R.id.resultText)
         copyTextBtn = findViewById(R.id.copyTextBtn)
+
+        menuBtn = findViewById(R.id.menuBtn)
+        logInBtn = findViewById(R.id.logInBtn)
+
+        // Setup
+        setup()
+    }
+
+    private fun setup() {
+        title = "Main"
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -63,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     recognizeText(bitmap)
                 }
             }
-        } 
+        }
 
         selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
@@ -79,6 +97,11 @@ class MainActivity : AppCompatActivity() {
 
         selectImgBtn.setOnClickListener {
             selectImageLauncher.launch("image/*")
+        }
+
+        logInBtn.setOnClickListener {
+            val intent = Intent(this, AuthActivity::class.java)
+            startActivity(intent)
         }
     }
 

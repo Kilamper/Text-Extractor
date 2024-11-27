@@ -4,65 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/cameraImage"
-        android:contentDescription="Camera Image"
-        android:scaleType="fitCenter"
-        android:src="@drawable/baseline_image_24"
-        android:layout_marginTop="12dp" />
+        android:layout_height="20dp"
+        android:background="@color/green" />
 
-    <Button
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/captureImgBtn"
-        android:text="Capture Image"
-        android:backgroundTint="@color/green"
-        android:layout_marginTop="12dp" />
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
+        android:background="@color/green">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/selectImgBtn"
-        android:text="Select Image"
-        android:backgroundTint="@color/green"
-        android:layout_marginTop="12dp" />
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/menuBtn"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/baseline_menu_24" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OCR Text:"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="16dp" />
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:id="@+id/resultText"
-        android:text=""
-        android:padding="8dp"
-        android:background="@drawable/border"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textAlignment="textStart"
-        android:layout_marginTop="16dp"
-        android:scrollbars="vertical" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    <Button
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/logInBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/green"
+            android:textColor="@color/white"
+            android:text="Log in" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/copyTextBtn"
-        android:visibility="invisible"
-        android:text="Copy Text"
-        android:backgroundTint="@color/green"
-        android:layout_marginTop="16dp" />
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/cameraImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="12dp"
+            android:contentDescription="Camera Image"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_image_24" />
+
+        <Button
+            android:id="@+id/captureImgBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/green"
+            android:text="Capture Image" />
+
+        <Button
+            android:id="@+id/selectImgBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/green"
+            android:text="Select Image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="OCR Text:"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/resultText"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border"
+            android:padding="8dp"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/copyTextBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/green"
+            android:text="Copy Text"
+            android:visibility="invisible" />
+    </LinearLayout>
 
 </LinearLayout>
