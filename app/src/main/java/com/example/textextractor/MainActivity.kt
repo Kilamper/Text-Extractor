@@ -8,8 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.text.method.ScrollingMovementMethod
+import android.view.MenuInflater
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -42,13 +44,40 @@ class MainActivity : AppCompatActivity() {
     private lateinit var selectImageLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        // Thread.sleep(2000);
         setTheme(R.style.Theme_TextExtractor)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        menuBtn = findViewById(R.id.menuBtn)
+
+        menuBtn.setOnClickListener {
+            val popupMenu = PopupMenu(this, menuBtn)
+            val inflater: MenuInflater = menuInflater
+            inflater.inflate(R.menu.menu_options, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.option1 -> {
+                        Toast.makeText(this, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    R.id.option2 -> {
+                        Toast.makeText(this, "Opción 2 seleccionada", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    R.id.option3 -> {
+                        Toast.makeText(this, "Opción 3 seleccionada", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
         cameraImage = findViewById(R.id.cameraImage)
         captureImgBtn = findViewById(R.id.captureImgBtn)
         selectImgBtn = findViewById(R.id.selectImgBtn)

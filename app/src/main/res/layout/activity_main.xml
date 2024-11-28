@@ -28,7 +28,9 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@drawable/baseline_menu_24" />
+            android:background="@drawable/baseline_menu_24"
+
+            />
 
         <View
             android:layout_width="0dp"
