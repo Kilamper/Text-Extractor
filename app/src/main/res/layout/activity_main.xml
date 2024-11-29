@@ -6,12 +6,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:statusBarColor="@color/green"
     tools:context=".MainActivity">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/green" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"
@@ -28,14 +25,21 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@drawable/baseline_menu_24"
-
-            />
+            android:background="@drawable/baseline_menu_24" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/userIcon"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/baseline_person_24"
+            android:visibility="invisible" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
@@ -45,7 +49,7 @@
             android:layout_gravity="center"
             android:background="@color/green"
             android:textColor="@color/white"
-            android:text="Log in" />
+            android:text="@string/log_in" />
 
     </LinearLayout>
 
@@ -60,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="12dp"
-            android:contentDescription="Camera Image"
+            android:contentDescription="@string/camera_image"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_image_24" />
 
@@ -70,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/green"
-            android:text="Capture Image" />
+            android:text="@string/capture_image" />
 
         <Button
             android:id="@+id/selectImgBtn"
@@ -78,13 +82,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/green"
-            android:text="Select Image" />
+            android:text="@string/select_image" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="OCR Text:"
+            android:text="@string/result_text"
             android:textColor="@color/black"
             android:textSize="26sp"
             android:textStyle="bold" />
@@ -108,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/green"
-            android:text="Copy Text"
+            android:text="@string/copy_text"
             android:visibility="invisible" />
     </LinearLayout>
 
