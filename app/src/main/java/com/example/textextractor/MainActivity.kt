@@ -8,7 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.text.method.ScrollingMovementMethod
+import android.util.TypedValue
 import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
@@ -19,6 +22,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuth
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -37,6 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var menuBtn: Button
     private lateinit var logInBtn: Button
+    private lateinit var userIcon: Button
+
+    private var currentUser: FirebaseUser? = null
 
     private var currentPhotoPath: String? = null
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -49,8 +57,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        menuBtn = findViewById(R.id.menuBtn)
+        cameraImage = findViewById(R.id.cameraImage)
+        captureImgBtn = findViewById(R.id.captureImgBtn)
+        selectImgBtn = findViewById(R.id.selectImgBtn)
+        resultText = findViewById(R.id.resultText)
+        copyTextBtn = findViewById(R.id.copyTextBtn)
 
+        menuBtn = findViewById(R.id.menuBtn)
+        logInBtn = findViewById(R.id.logInBtn)
+        userIcon = findViewById(R.id.userIcon)
+
+        // Setup
+        setup()
+    }
+
+    private fun setup() {
+        title = "Main"
+
+        // Menu button
         menuBtn.setOnClickListener {
             val popupMenu = PopupMenu(this, menuBtn)
             val inflater: MenuInflater = menuInflater
@@ -78,22 +102,30 @@ class MainActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
-        cameraImage = findViewById(R.id.cameraImage)
-        captureImgBtn = findViewById(R.id.captureImgBtn)
-        selectImgBtn = findViewById(R.id.selectImgBtn)
-        resultText = findViewById(R.id.resultText)
-        copyTextBtn = findViewById(R.id.copyTextBtn)
 
-        menuBtn = findViewById(R.id.menuBtn)
-        logInBtn = findViewById(R.id.logInBtn)
+        // User icon button
+        userIcon.setOnClickListener {
+            val popupMenu = PopupMenu(this, userIcon)
+            val inflater: MenuInflater = menuInflater
+            inflater.inflate(R.menu.user_options, popupMenu.menu)
 
-        // Setup
-        setup()
-    }
+            // Set the user email in the menu
+            val userEmailMenuItem = popupMenu.menu.findItem(R.id.userEmail)
+            userEmailMenuItem.title = currentUser?.email ?: ""
 
-    private fun setup() {
-        title = "Main"
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.logOut -> {
+                        FirebaseAuth.getInstance().signOut()
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenu.show() // Show the popup menu
+        }
 
+        // Capture image permission launcher
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
                 captureImage()
@@ -102,6 +134,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Take picture launcher
         takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
                 currentPhotoPath?.let { path ->
@@ -112,6 +145,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Select image launcher
         selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
@@ -120,17 +154,44 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Capture image button
         captureImgBtn.setOnClickListener {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
+        // Select image button
         selectImgBtn.setOnClickListener {
             selectImageLauncher.launch("image/*")
         }
 
+        // Log in button
         logInBtn.setOnClickListener {
             val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)
+        }
+
+        // Check if user is logged in
+        currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser != null) {
+            userIcon.visibility = Button.VISIBLE
+            logInBtn.visibility = Button.INVISIBLE
+            val widthInDp = 50
+            val widthInPx = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                widthInDp.toFloat(),
+                resources.displayMetrics
+            ).toInt()
+            userIcon.layoutParams.width = widthInPx
+            logInBtn.layoutParams.width = 0
+            userIcon.setOnClickListener {
+                // Add your user icon click handling code here
+            }
+        } else {
+            userIcon.visibility = Button.INVISIBLE
+            logInBtn.visibility = Button.VISIBLE
+            userIcon.layoutParams.width = 0
+            logInBtn.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         }
     }
 
