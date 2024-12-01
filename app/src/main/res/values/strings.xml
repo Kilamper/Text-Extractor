@@ -14,4 +14,6 @@
     <string name="history">History</string>
     <string name="help">Help</string>
     <string name="log_out">Log Out</string>
+    <string name="save_text">Save Text</string>
+    <string name="app_icon">App Icon</string>
 </resources>

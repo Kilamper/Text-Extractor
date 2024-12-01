@@ -10,10 +10,10 @@ import android.os.Environment
 import android.text.method.ScrollingMovementMethod
 import android.util.TypedValue
 import android.view.MenuInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -37,14 +38,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraImage: ImageView
     private lateinit var captureImgBtn: Button
     private lateinit var selectImgBtn: Button
+
     private lateinit var resultText: TextView
     private lateinit var copyTextBtn: Button
+    private lateinit var saveTextBtn: Button
 
     private lateinit var menuBtn: Button
     private lateinit var logInBtn: Button
     private lateinit var userIcon: Button
 
     private var currentUser: FirebaseUser? = null
+    private val db = FirebaseFirestore.getInstance()
 
     private var currentPhotoPath: String? = null
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -52,16 +56,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var selectImageLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_TextExtractor)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         cameraImage = findViewById(R.id.cameraImage)
         captureImgBtn = findViewById(R.id.captureImgBtn)
         selectImgBtn = findViewById(R.id.selectImgBtn)
+
         resultText = findViewById(R.id.resultText)
         copyTextBtn = findViewById(R.id.copyTextBtn)
+        saveTextBtn = findViewById(R.id.saveTextBtn)
 
         menuBtn = findViewById(R.id.menuBtn)
         logInBtn = findViewById(R.id.logInBtn)
@@ -101,28 +105,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             popupMenu.show()
-        }
-
-        // User icon button
-        userIcon.setOnClickListener {
-            val popupMenu = PopupMenu(this, userIcon)
-            val inflater: MenuInflater = menuInflater
-            inflater.inflate(R.menu.user_options, popupMenu.menu)
-
-            // Set the user email in the menu
-            val userEmailMenuItem = popupMenu.menu.findItem(R.id.userEmail)
-            userEmailMenuItem.title = currentUser?.email ?: ""
-
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.logOut -> {
-                        FirebaseAuth.getInstance().signOut()
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popupMenu.show() // Show the popup menu
         }
 
         // Capture image permission launcher
@@ -185,13 +167,26 @@ class MainActivity : AppCompatActivity() {
             userIcon.layoutParams.width = widthInPx
             logInBtn.layoutParams.width = 0
             userIcon.setOnClickListener {
-                // Add your user icon click handling code here
+                val popupMenu = PopupMenu(this, userIcon)
+                val inflater: MenuInflater = menuInflater
+                inflater.inflate(R.menu.user_options, popupMenu.menu)
+
+                // Set the user email in the menu
+                val userEmailMenuItem = popupMenu.menu.findItem(R.id.userEmail)
+                userEmailMenuItem.title = currentUser?.email ?: ""
+
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.logOut -> {
+                            FirebaseAuth.getInstance().signOut()
+                            recreate()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popupMenu.show() // Show the popup menu
             }
-        } else {
-            userIcon.visibility = Button.INVISIBLE
-            logInBtn.visibility = Button.VISIBLE
-            userIcon.layoutParams.width = 0
-            logInBtn.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         }
     }
 
@@ -229,6 +224,19 @@ class MainActivity : AppCompatActivity() {
                 val clip = android.content.ClipData.newPlainText("recognized text", ocrText.text)
                 clipboard?.setPrimaryClip(clip)
                 Toast.makeText(this, "Text Copied", Toast.LENGTH_SHORT).show()
+            }
+            if (currentUser != null) {
+                copyTextBtn.layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+                saveTextBtn.layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+                saveTextBtn.visibility = Button.VISIBLE
+                saveTextBtn.setOnClickListener {
+                    db.collection("users").document(currentUser!!.uid).collection("scannedTexts").add(mapOf("text" to ocrText.text))
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Text saved", Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener { e ->
+                            Toast.makeText(this, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
         }.addOnFailureListener { e ->
             Toast.makeText(this, "Failed to recognize text: ${e.message}", Toast.LENGTH_SHORT).show()

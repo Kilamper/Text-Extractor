@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:statusBarColor="@color/green"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -16,16 +15,15 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="4dp"
-        android:background="@color/green">
+        android:background="@color/light_purple">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/menuBtn"
-            android:layout_width="40dp"
+            android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@drawable/baseline_menu_24" />
+            android:drawableStart="@drawable/baseline_menu_24" />
 
         <View
             android:layout_width="0dp"
@@ -38,7 +36,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@drawable/baseline_person_24"
+            android:drawableStart="@drawable/baseline_person_24"
             android:visibility="invisible" />
 
         <Button
@@ -47,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/green"
+            android:background="@color/light_purple"
             android:textColor="@color/white"
             android:text="@string/log_in" />
 
@@ -62,7 +60,7 @@
         <ImageView
             android:id="@+id/cameraImage"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="160dp"
             android:layout_marginTop="12dp"
             android:contentDescription="@string/camera_image"
             android:scaleType="fitCenter"
@@ -73,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/light_purple"
             android:text="@string/capture_image" />
 
         <Button
@@ -81,7 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/light_purple"
             android:text="@string/select_image" />
 
         <TextView
@@ -106,14 +106,34 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/copyTextBtn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/green"
-            android:text="@string/copy_text"
-            android:visibility="invisible" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/copyTextBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/light_purple"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/baseline_content_copy_24"
+                android:text="@string/copy_text"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/saveTextBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/light_purple"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/baseline_save_24"
+                android:text="@string/save_text"
+                android:visibility="invisible" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
