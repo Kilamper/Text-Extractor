@@ -2,14 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TextExtractor" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/green</item>
-        <item name="colorPrimaryVariant">@color/green</item>
-        <item name="android:statusBarColor">@color/green</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryVariant">@color/light_purple</item>
+        <item name="android:statusBarColor">@color/light_purple</item>
     </style>
 
     <style name="Theme.TextExtractor" parent="Base.Theme.TextExtractor" />
-
-    <style name="Theme.SplashScreen" parent="Base.Theme.TextExtractor">
-        <item name="android:windowBackground">@drawable/splashscreen</item>
-    </style>
 </resources>
