@@ -15,6 +15,7 @@ class AuthActivity: AppCompatActivity() {
     private lateinit var logInButton: Button
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var closeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,7 @@ class AuthActivity: AppCompatActivity() {
         logInButton = findViewById(R.id.logInButton)
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
+        closeButton = findViewById(R.id.closeButton)
 
         // Setup
         setup()
@@ -59,6 +61,10 @@ class AuthActivity: AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        closeButton.setOnClickListener {
+            goToMain()
         }
     }
 

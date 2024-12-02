@@ -93,7 +93,7 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
             android:id="@+id/resultText"
             android:layout_width="match_parent"
             android:layout_height="280dp"
