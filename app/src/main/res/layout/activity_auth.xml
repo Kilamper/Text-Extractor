@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1F3555"> <!-- Color de fondo oscuro -->
+    android:background="@color/dark_purple"> <!-- Color de fondo oscuro -->
 
     <!-- Botón de retroceso -->
     <Button
@@ -38,20 +38,20 @@
 
         <ImageView
             android:id="@+id/logoImageView"
-            android:layout_width="126dp"
-            android:layout_height="116dp"
+            android:layout_width="180dp"
+            android:layout_height="160dp"
             android:layout_gravity="center"
-            android:contentDescription="@string/logo"
-            android:src="@mipmap/text_icon" />
+            android:contentDescription="@string/app_icon"
+            android:src="@drawable/login_icon" />
 
         <TextView
             android:id="@+id/welcomeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:text="Bienvenido"
+            android:text="@string/welcome"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
@@ -62,7 +62,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Inicia sesión"
+            android:text="@string/log_in_to_continue"
             android:textColor="#D0D0D0"
             android:textSize="14sp" />
 
@@ -72,7 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/rounded_edittext_bg"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/border"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingStart="16dp"
@@ -86,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_edittext_bg"
+            android:autofillHints="password"
+            android:background="@drawable/border"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:paddingStart="16dp"
@@ -124,5 +126,18 @@
                 android:text="@string/log_in_button"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
+        <!-- Botón de Google -->
+        <Button
+            android:id="@+id/googleButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:fontFamily="sans-serif-medium"
+            android:drawableStart="@drawable/google"
+            android:text="@string/google_button"
+            android:textColor="#000000" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

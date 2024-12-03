@@ -17,4 +17,7 @@
     <string name="save_text">Save Text</string>
     <string name="app_icon">App Icon</string>
     <string name="close">Close</string>
+    <string name="log_in_to_continue">Log in to continue</string>
+    <string name="welcome">Welcome</string>
+    <string name="google_button">Log in with Google</string>
 </resources>
