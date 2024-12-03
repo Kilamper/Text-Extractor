@@ -86,21 +86,21 @@ class MainActivity : AppCompatActivity() {
 
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.option1 -> {
+                    R.id.settings -> {
                         Toast.makeText(this, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
                         true
                     }
 
-                    R.id.option2 -> {
+                    R.id.history -> {
                         Toast.makeText(this, "Opción 2 seleccionada", Toast.LENGTH_SHORT).show()
                         true
                     }
 
-                    R.id.option3 -> {
-                        Toast.makeText(this, "Opción 3 seleccionada", Toast.LENGTH_SHORT).show()
+                    R.id.help -> {
+                        val intent = Intent(this, HelpActivity::class.java)
+                        startActivity(intent)
                         true
                     }
-
                     else -> false
                 }
             }
@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
                 saveTextBtn.layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
                 saveTextBtn.visibility = Button.VISIBLE
                 saveTextBtn.setOnClickListener {
-                    db.collection("users").document(currentUser!!.uid).collection("scannedTexts").add(mapOf("text" to ocrText.text))
+                    db.collection("users").document(currentUser!!.uid).collection("scannedTexts").add(mapOf("text" to resultText.text.toString(), "date" to Date.from(java.time.Instant.now())))
                         .addOnSuccessListener {
                             Toast.makeText(this, "Text saved", Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener { e ->

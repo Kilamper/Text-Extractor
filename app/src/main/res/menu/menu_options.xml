@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/option1"
+        android:id="@+id/settings"
         android:title="@string/settings" />
     <item
-        android:id="@+id/option2"
+        android:id="@+id/history"
         android:title="@string/history" />
     <item
-        android:id="@+id/option3"
+        android:id="@+id/help"
         android:title="@string/help" />
 </menu>
