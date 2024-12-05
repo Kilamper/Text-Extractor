@@ -8,10 +8,10 @@
     android:background="@color/light_purple">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
         android:contentDescription="@string/app_icon"
-        android:src="@mipmap/text_icon" />
+        android:src="@drawable/splash_icon" />
 
     <TextView
         android:layout_width="wrap_content"
