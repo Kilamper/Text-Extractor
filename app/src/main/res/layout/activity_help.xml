@@ -39,21 +39,17 @@
             android:layout_gravity="center"
             android:drawableStart="@drawable/baseline_person_24"
             android:visibility="invisible" />
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/goBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/close"
-        android:gravity="center"
-        android:drawableStart="@drawable/baseline_close_24"
-        android:tint="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/logInBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/light_purple"
+            android:textColor="@color/white"
+            android:text="@string/log_in" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
