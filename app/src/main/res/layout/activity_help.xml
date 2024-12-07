@@ -1,8 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical">
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    android:background="@color/cardview_dark_background">
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:background="@color/light_purple">
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/menuBtn"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/baseline_menu_24" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/userIcon"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/baseline_person_24"
+            android:visibility="invisible" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/logInBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/light_purple"
+            android:textColor="@color/white"
+            android:text="@string/log_in" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/goBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close"
+        android:gravity="center"
+        android:drawableStart="@drawable/baseline_close_24"
+        android:tint="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Preguntas frecuentes"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. ¿Cómo abro la cámara?"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Para abrir la cámara, haz clic en el botón de cámara en la pantalla principal."
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:paddingBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. ¿Cómo tomo una foto?"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Presiona el botón de captura en la pantalla de la cámara para tomar una foto."
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:paddingBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. ¿Dónde se guardan las fotos?"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Las fotos se guardan automáticamente en la galería de tu dispositivo."
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:paddingBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. ¿Cómo cambio entre la cámara frontal y la trasera?"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Utiliza el botón de cambio de cámara en la pantalla de la cámara para alternar entre la cámara frontal y la trasera."
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:paddingBottom="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
