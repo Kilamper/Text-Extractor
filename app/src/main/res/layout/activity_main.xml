@@ -57,6 +57,29 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/copyTextBtn"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/light_purple"
+            android:drawableStart="@drawable/baseline_content_copy_24"
+            android:text="@string/copy_text"
+            android:textColor="@color/white" />
+
+
+        <Button
+            android:id="@+id/saveTextBtn"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/light_purple"
+            android:textColor="@color/white"
+            android:drawableStart="@drawable/baseline_save_24"
+            android:text="@string/save_text" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +91,7 @@
         <EditText
             android:id="@+id/resultText"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="230dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/border"
             android:padding="8dp"
@@ -77,12 +100,11 @@
             android:text=""
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="20sp" />
-
+            android:textSize="16sp" />
         <ImageView
             android:id="@+id/cameraImage"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="140dp"
             android:layout_marginTop="12dp"
             android:contentDescription="@string/camera_image"
             android:scaleType="fitCenter"
@@ -105,28 +127,6 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/light_purple"
             android:text="@string/select_image" />
-
-            <Button
-                android:id="@+id/copyTextBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/light_purple"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/baseline_content_copy_24"
-                android:text="@string/copy_text"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/saveTextBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/light_purple"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/baseline_save_24"
-                android:text="@string/save_text"
-                android:visibility="invisible" />
     </LinearLayout>
 
 </LinearLayout>
