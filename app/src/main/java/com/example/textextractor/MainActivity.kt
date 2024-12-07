@@ -92,13 +92,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     R.id.history -> {
-                        Toast.makeText(this, "Opción 2 seleccionada", Toast.LENGTH_SHORT).show()
+                        goToHistory()
                         true
                     }
 
                     R.id.help -> {
-                        val intent = Intent(this, HelpActivity::class.java)
-                        startActivity(intent)
+                        goToHelp()
                         true
                     }
                     else -> false
@@ -241,5 +240,15 @@ class MainActivity : AppCompatActivity() {
         }.addOnFailureListener { e ->
             Toast.makeText(this, "Failed to recognize text: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun goToHistory() {
+        val intent = Intent(this, HistoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun goToHelp() {
+        val intent = Intent(this, HelpActivity::class.java)
+        startActivity(intent)
     }
 }

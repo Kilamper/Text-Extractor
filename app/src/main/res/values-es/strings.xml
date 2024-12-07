@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_in">Iniciar sesión</string>
+    <string name="camera_image">Imagen de la cámara</string>
+    <string name="capture_image">Capturar imagen</string>
+    <string name="select_image">Seleccionar imagen</string>
+    <string name="result_text">Texto Escaneado:</string>
+    <string name="copy_text">Copiar Texto</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="log_in_button">Iniciar Sesión</string>
+    <string name="settings">Ajustes</string>
+    <string name="history">Historial</string>
+    <string name="help">Ayuda</string>
+    <string name="log_out">Cerrar Sesión</string>
+    <string name="save_text">Guardar Texto</string>
+    <string name="app_icon">Icono de la App</string>
+    <string name="close">Cerrar</string>
+    <string name="log_in_to_continue">Inicia sesión para continuar</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="google_button">Iniciar sesión con Google</string>
+    <string name="return_back">Volver atrás</string>
+    <string name="copy_toast">Texto copiado</string>
+    <string name="save_toast">Texto guardado</string>
+    <string name="delete_toast">Texto eliminado</string>
+    <string name="home">Inicio</string>
+</resources>

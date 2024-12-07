@@ -8,6 +8,14 @@ android {
     namespace = "com.example.textextractor"
     compileSdk = 35
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.0"
+    }
+
     defaultConfig {
         applicationId = "com.example.textextractor"
         minSdk = 28
@@ -43,6 +51,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.foundation.layout.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,4 +72,10 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.google.firebase.auth)
     implementation(libs.play.services.auth)
+
+    // Jetpack Compose dependencies
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.activity.compose)
 }

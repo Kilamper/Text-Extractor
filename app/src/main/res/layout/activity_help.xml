@@ -39,16 +39,6 @@
             android:layout_gravity="center"
             android:drawableStart="@drawable/baseline_person_24"
             android:visibility="invisible" />
-
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/logInBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/light_purple"
-            android:textColor="@color/white"
-            android:text="@string/log_in" />
     </LinearLayout>
 
     <Button

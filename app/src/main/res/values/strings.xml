@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Text Extractor</string>
+    <string name="app_name" translatable="false">Text Extractor</string>
     <string name="log_in">Log in</string>
     <string name="camera_image">Camera Image</string>
     <string name="capture_image">Capture Image</string>
     <string name="select_image">Select Image</string>
-    <string name="result_text">Result Text:</string>
+    <string name="result_text">Scaned Text:</string>
     <string name="copy_text">Copy Text</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -20,4 +20,9 @@
     <string name="log_in_to_continue">Log in to continue</string>
     <string name="welcome">Welcome</string>
     <string name="google_button">Log in with Google</string>
+    <string name="return_back">Return back</string>
+    <string name="copy_toast">Text copied</string>
+    <string name="save_toast">Text saved</string>
+    <string name="delete_toast">Text deleted</string>
+    <string name="home">Home</string>
 </resources>
