@@ -7,16 +7,19 @@ import android.view.MenuInflater
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 
 class HelpActivity : AppCompatActivity() {
 
     private lateinit var menuBtn: Button
+    private lateinit var logInBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_help)
 
         menuBtn = findViewById(R.id.menuBtn)
+        logInBtn = findViewById(R.id.logInBtn)
 
         // Menu button
         menuBtn.setOnClickListener {
@@ -27,7 +30,7 @@ class HelpActivity : AppCompatActivity() {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.home -> {
-                        goToMain()
+                        goToActivity(MainActivity::class.java)
                         true
                     }
                     R.id.settings -> {
@@ -36,7 +39,7 @@ class HelpActivity : AppCompatActivity() {
                     }
 
                     R.id.history -> {
-                        goToHistory()
+                        goToActivity(HistoryActivity::class.java)
                         true
                     }
 
@@ -50,15 +53,15 @@ class HelpActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
+
+        // Log in button
+        logInBtn.setOnClickListener {
+            goToActivity(AuthActivity::class.java)
+        }
     }
 
-    private fun goToMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun goToHistory() {
-        val intent = Intent(this, HistoryActivity::class.java)
+    private fun goToActivity(activity: Class<*>) {
+        val intent = Intent(this, activity)
         startActivity(intent)
     }
 }

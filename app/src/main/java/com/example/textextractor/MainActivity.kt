@@ -92,12 +92,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     R.id.history -> {
-                        goToHistory()
+                        goToActivity(HistoryActivity::class.java)
                         true
                     }
 
                     R.id.help -> {
-                        goToHelp()
+                        goToActivity(HelpActivity::class.java)
                         true
                     }
                     else -> false
@@ -147,8 +147,7 @@ class MainActivity : AppCompatActivity() {
 
         // Log in button
         logInBtn.setOnClickListener {
-            val intent = Intent(this, AuthActivity::class.java)
-            startActivity(intent)
+            goToActivity(AuthActivity::class.java)
         }
 
         // Check if user is logged in
@@ -242,13 +241,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToHistory() {
-        val intent = Intent(this, HistoryActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun goToHelp() {
-        val intent = Intent(this, HelpActivity::class.java)
+    private fun goToActivity(activity: Class<*>) {
+        val intent = Intent(this, activity)
         startActivity(intent)
     }
 }

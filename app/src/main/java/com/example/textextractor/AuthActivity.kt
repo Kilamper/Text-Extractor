@@ -60,7 +60,7 @@ class AuthActivity : ComponentActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        goToMain()
+                        goToActivity(MainActivity::class.java)
                     } else {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Sign up failed: ${it.exception?.message}")
@@ -75,7 +75,7 @@ class AuthActivity : ComponentActivity() {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        goToMain()
+                        goToActivity(MainActivity::class.java)
                     } else {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Log in failed: ${it.exception?.message}")
@@ -94,8 +94,8 @@ class AuthActivity : ComponentActivity() {
         startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
     }
 
-    private fun goToMain() {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun goToActivity(activity: Class<*>) {
+        val intent = Intent(this, activity)
         startActivity(intent)
     }
 
@@ -114,7 +114,7 @@ class AuthActivity : ComponentActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                goToMain()
+                                goToActivity(MainActivity::class.java)
                             } else {
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar("Google sign in failed: ${it.exception?.message}")
