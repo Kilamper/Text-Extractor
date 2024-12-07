@@ -16,6 +16,7 @@
         android:theme="@style/Theme.TextExtractor"
         tools:targetApi="31">
         <activity android:name=".MainActivity" android:label="Home" />
+        <activity android:name=".HelpActivity" android:label="Help" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
