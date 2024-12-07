@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Preguntas frecuentes"
+                android:text="FAQ"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. ¿Cómo abro la cámara?"
+                android:text="1. How do I take a picture?"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:paddingBottom="4dp" />
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Para abrir la cámara, haz clic en el botón de cámara en la pantalla principal."
+                android:text="In order to take a picture, you have to click on 'Capture Image' and give camera permissions"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:paddingBottom="12dp" />
@@ -103,7 +103,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2. ¿Cómo tomo una foto?"
+                android:text="2. Can I select a picture from my gallery?"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:paddingBottom="4dp" />
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Presiona el botón de captura en la pantalla de la cámara para tomar una foto."
+                android:text="Yes, you can do it by clicking on 'Select Image'."
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:paddingBottom="12dp" />
@@ -119,7 +119,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3. ¿Dónde se guardan las fotos?"
+                android:text="3. How can I scan the text from an image?"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:paddingBottom="4dp" />
@@ -127,7 +127,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Las fotos se guardan automáticamente en la galería de tu dispositivo."
+                android:text="The scanned text will automatically appear when you select or take a picture."
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:paddingBottom="12dp" />
@@ -135,7 +135,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="4. ¿Cómo cambio entre la cámara frontal y la trasera?"
+                android:text="4. Can I edit the scanned text?"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:paddingBottom="4dp" />
@@ -143,7 +143,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Utiliza el botón de cambio de cámara en la pantalla de la cámara para alternar entre la cámara frontal y la trasera."
+                android:text="Yes, just click on it and you will be able to edit it like normal."
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:paddingBottom="12dp" />

@@ -73,10 +73,12 @@
             android:background="@drawable/border"
             android:padding="8dp"
             android:scrollbars="vertical"
+            android:gravity="top|start"
             android:text=""
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
         <ImageView
             android:id="@+id/cameraImage"
             android:layout_width="match_parent"
