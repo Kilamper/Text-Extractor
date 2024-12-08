@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -158,42 +159,44 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
 fun UserMenu(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
     val expanded = remember { mutableStateOf(false) }
 
-    IconButton(
-        onClick = { expanded.value = true },
-        modifier = Modifier.size(48.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_person_24),
-            tint = Color.White,
-            contentDescription = null
-        )
-    }
+    Box {
+        IconButton(
+            onClick = { expanded.value = true },
+            modifier = Modifier.size(48.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_person_24),
+                tint = Color.White,
+                contentDescription = null
+            )
+        }
 
-
-    DropdownMenu(
-        expanded = expanded.value,
-        onDismissRequest = { expanded.value = false },
-    ) {
-        DropdownMenuItem(
-            text = { Text(currentUser?.email ?: "") },
-            onClick = {
-                expanded.value = false
-            }
-        )
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.log_out)) },
-            onClick = {
-                FirebaseAuth.getInstance().signOut()
-                expanded.value = false
-                goToActivity(MainActivity::class.java)
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_logout_24),
-                    tint = Color.Black,
-                    contentDescription = null
-                )
-            }
-        )
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            offset = DpOffset.Unspecified,
+        ) {
+            DropdownMenuItem(
+                text = { Text(currentUser?.email ?: "") },
+                onClick = {
+                    expanded.value = false
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.log_out)) },
+                onClick = {
+                    FirebaseAuth.getInstance().signOut()
+                    expanded.value = false
+                    goToActivity(MainActivity::class.java)
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_logout_24),
+                        tint = Color.Black,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
     }
 }
