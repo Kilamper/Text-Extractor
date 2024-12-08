@@ -71,22 +71,12 @@ fun FAQSection() {
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        FAQItem(
-            question = "1. How do I take a picture?",
-            answer = "In order to take a picture, you have to click on 'Capture Image' and give camera permissions"
-        )
-        FAQItem(
-            question = "2. Can I select a picture from my gallery?",
-            answer = "Yes, you can do it by clicking on 'Select Image'."
-        )
-        FAQItem(
-            question = "3. How can I scan the text from an image?",
-            answer = "The scanned text will automatically appear when you select or take a picture."
-        )
-        FAQItem(
-            question = "4. Can I edit the scanned text?",
-            answer = "Yes, just click on it and you will be able to edit it like normal."
-        )
+        for (i in 1..5) {
+            FAQItem(
+                question = stringResource(id = R.string::class.java.getField("question_$i").getInt(null)),
+                answer = stringResource(id = R.string::class.java.getField("answer_$i").getInt(null))
+            )
+        }
     }
 }
 

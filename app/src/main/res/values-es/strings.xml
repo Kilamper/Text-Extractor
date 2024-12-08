@@ -29,4 +29,14 @@
     <string name="confirm_delete_message">¡No podrá revertir este cambio una vez realizado!</string>
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
+    <string name="question_1">1. ¿Cómo puedo capturar una imagen?</string>
+    <string name="answer_1">Para tomar una fotografía, debes hacer clic en \'Capturar Imagen\' y otorgar permisos a la cámara.</string>
+    <string name="question_2">2. ¿Puedo seleccionar una imagen de mi galería?</string>
+    <string name="answer_2">Sí, puedes hacerlo haciendo clic en “Seleccionar Imagen”.</string>
+    <string name="question_3">3. ¿Cómo puedo escanear el texto de una imagen?</string>
+    <string name="answer_3">Puede escanear el texto de una imagen haciendo clic en el icono de la cámara y seleccionando una imagen de la galería o tomando una fotografía.</string>
+    <string name="question_4">4. ¿Cómo puedo copiar el texto escaneado?</string>
+    <string name="answer_4">Puede copiar al portapapeles el texto escaneado haciendo clic en el botón \'Copiar Texto\'.</string>
+    <string name="question_5">5. ¿Puedo guardar el texto escaneado para más tarde?</string>
+    <string name="answer_5">Puede guardar el texto escaneado haciendo clic en el botón “Guardar Texto” y verlo en la sección de historial.</string>
 </resources>

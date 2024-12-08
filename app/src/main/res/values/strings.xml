@@ -30,4 +30,14 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="faq" translatable="false">FAQ</string>
+    <string name="question_1">1. How do I take a picture?</string>
+    <string name="answer_1">In order to take a picture, you have to click on \'Capture Image\' and give camera permissions</string>
+    <string name="question_2">2. Can I select a picture from my gallery?</string>
+    <string name="answer_2">Yes, you can do it by clicking on \'Select Image\'.</string>
+    <string name="question_3">3. How can I scan the text from an image?</string>
+    <string name="answer_3">You can scan the text from an image by clicking on the camera icon and selecting an image from the gallery or by taking a picture.</string>
+    <string name="question_4">4. How can I copy the scanned text?</string>
+    <string name="answer_4">You can copy to the clipboard the scanned text by clicking on the \'Copy Text\' button.</string>
+    <string name="question_5">5. Can I save the scanned text for later?</string>
+    <string name="answer_5">You can save the scanned text by clicking on the \'Save Text\' button and view it in the history section.</string>
 </resources>
