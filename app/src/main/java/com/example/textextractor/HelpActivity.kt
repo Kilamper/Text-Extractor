@@ -1,109 +1,108 @@
 package com.example.textextractor
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.MenuInflater
-import android.widget.Button
-import android.widget.PopupMenu
-import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class HelpActivity : AppCompatActivity() {
+class HelpActivity : ComponentActivity() {
 
-    private lateinit var menuBtn: Button
-    private lateinit var logInBtn: Button
-    private lateinit var userIcon: Button
     private var currentUser: FirebaseUser? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_help)
-
-        menuBtn = findViewById(R.id.menuBtn)
-        logInBtn = findViewById(R.id.logInBtn)
-        userIcon = findViewById(R.id.userIcon)
-
-        // Menu button
-        menuBtn.setOnClickListener {
-            val popupMenu = PopupMenu(this, menuBtn)
-            val inflater: MenuInflater = menuInflater
-            inflater.inflate(R.menu.menu_options, popupMenu.menu)
-
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.home -> {
-                        goToActivity(MainActivity::class.java)
-                        true
-                    }
-                    R.id.settings -> {
-                        Toast.makeText(this, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
-                        true
-                    }
-
-                    R.id.history -> {
-                        goToActivity(HistoryActivity::class.java)
-                        true
-                    }
-
-                    R.id.help -> {
-                        val intent = Intent(this, HelpActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popupMenu.show()
-        }
-
         currentUser = FirebaseAuth.getInstance().currentUser
 
-        if (currentUser != null) {
-            userIcon.visibility = Button.VISIBLE
-            logInBtn.visibility = Button.INVISIBLE
-            val widthInDp = 50
-            val widthInPx = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                widthInDp.toFloat(),
-                resources.displayMetrics
-            ).toInt()
-            userIcon.layoutParams.width = widthInPx
-            logInBtn.layoutParams.width = 0
-            userIcon.setOnClickListener {
-                val popupMenu = PopupMenu(this, userIcon)
-                val inflater: MenuInflater = menuInflater
-                inflater.inflate(R.menu.user_options, popupMenu.menu)
-
-                // Set the user email in the menu
-                val userEmailMenuItem = popupMenu.menu.findItem(R.id.userEmail)
-                userEmailMenuItem.title = currentUser?.email ?: ""
-
-                popupMenu.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.logOut -> {
-                            FirebaseAuth.getInstance().signOut()
-                            recreate()
-                            true
-                        }
-                        else -> false
-                    }
-                }
-                popupMenu.show() // Show the popup menu
-            }
-        }
-
-        // Log in button
-        logInBtn.setOnClickListener {
-            goToActivity(AuthActivity::class.java)
+        setContent {
+            HelpScreen(currentUser, ::goToActivity)
         }
     }
 
     private fun goToActivity(activity: Class<*>) {
         val intent = Intent(this, activity)
         startActivity(intent)
+    }
+}
+
+@Composable
+fun HelpScreen(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        HeaderBar(
+            currentUser = currentUser,
+            onLogInClick = { goToActivity(AuthActivity::class.java) },
+            goToActivity = goToActivity,
+            activityId = 3
+        )
+        Column(
+            Modifier.padding(top = 40.dp).padding(16.dp).verticalScroll(rememberScrollState())
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
+            FAQSection()
+        }
+    }
+}
+
+@Composable
+fun FAQSection() {
+    Column {
+        Text(
+            text = stringResource(id = R.string.faq),
+            style = MaterialTheme.typography.headlineLarge,
+            color = colorResource(id = R.color.black),
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        FAQItem(
+            question = "1. How do I take a picture?",
+            answer = "In order to take a picture, you have to click on 'Capture Image' and give camera permissions"
+        )
+        FAQItem(
+            question = "2. Can I select a picture from my gallery?",
+            answer = "Yes, you can do it by clicking on 'Select Image'."
+        )
+        FAQItem(
+            question = "3. How can I scan the text from an image?",
+            answer = "The scanned text will automatically appear when you select or take a picture."
+        )
+        FAQItem(
+            question = "4. Can I edit the scanned text?",
+            answer = "Yes, just click on it and you will be able to edit it like normal."
+        )
+    }
+}
+
+@Composable
+fun FAQItem(question: String, answer: String) {
+    Column(modifier = Modifier.padding(bottom = 12.dp)) {
+        Text(
+            text = question,
+            style = MaterialTheme.typography.bodyLarge,
+            color = colorResource(id = R.color.black),
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Text(
+            text = answer,
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.black)
+        )
     }
 }

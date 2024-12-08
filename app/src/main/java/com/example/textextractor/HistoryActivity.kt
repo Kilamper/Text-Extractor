@@ -31,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -97,7 +96,8 @@ fun HistoryScreen(
         HeaderBar(
             currentUser = currentUser,
             onLogInClick = { goToActivity(AuthActivity::class.java) },
-            goToActivity = goToActivity
+            goToActivity = goToActivity,
+            activityId = 1
         )
         Column(
             modifier = Modifier.padding(top = 40.dp).padding(16.dp).verticalScroll(rememberScrollState())
@@ -106,121 +106,6 @@ fun HistoryScreen(
                 TextCard(scannedText, currentUser, scannedTexts.toMutableList(), triggerReload)
             }
         }
-    }
-}
-
-@Composable
-fun HeaderBar(
-    currentUser: FirebaseUser?,
-    onLogInClick: () -> Unit,
-    goToActivity: (Class<*>) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .background(colorResource(id = R.color.light_purple))
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        BurgerMenu(goToActivity)
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        if (currentUser != null) {
-            UserMenu(currentUser, goToActivity)
-        } else {
-            Button(
-                onClick = onLogInClick,
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.light_purple)),
-                modifier = Modifier.height(50.dp),
-                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.log_in),
-                    color = colorResource(id = R.color.white)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun BurgerMenu(goToActivity: (Class<*>) -> Unit) {
-    val context = LocalContext.current
-    val expanded = remember { mutableStateOf(false) }
-
-    IconButton(
-        onClick = { expanded.value = true },
-        modifier = Modifier.size(48.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_menu_24),
-            tint = Color.White,
-            contentDescription = null
-        )
-    }
-
-    DropdownMenu(
-        expanded = expanded.value,
-        onDismissRequest = { expanded.value = false }
-    ) {
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.home)) },
-            onClick = {
-                goToActivity(MainActivity::class.java)
-                expanded.value = false
-            }
-        )
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.settings)) },
-            onClick = {
-                Toast.makeText(context, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
-                expanded.value = false
-            })
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.help)) },
-            onClick = {
-                goToActivity(HelpActivity::class.java)
-                expanded.value = false
-            })
-    }
-}
-
-@Composable
-fun UserMenu(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
-    val expanded = remember { mutableStateOf(false) }
-
-    IconButton(
-        onClick = { expanded.value = true },
-        modifier = Modifier.size(48.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_person_24),
-            tint = Color.White,
-            contentDescription = null
-        )
-    }
-
-    DropdownMenu(
-        expanded = expanded.value,
-        onDismissRequest = { expanded.value = false }
-    ) {
-        DropdownMenuItem(
-            text = { Text(currentUser?.email ?: "") },
-            onClick = {
-                expanded.value = false
-            }
-        )
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.log_out)) },
-            onClick = {
-                FirebaseAuth.getInstance().signOut()
-                expanded.value = false
-                goToActivity(MainActivity::class.java)
-            }
-        )
     }
 }
 
@@ -265,6 +150,12 @@ fun TextCard(
                 ) {
                     Text(text = stringResource(R.string.cancel))
                 }
+            },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_delete_outline_24),
+                    contentDescription = null
+                )
             }
         )
     }

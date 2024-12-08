@@ -4,7 +4,7 @@
     <string name="camera_image">Camera Image</string>
     <string name="capture_image">Capture Image</string>
     <string name="select_image">Select Image</string>
-    <string name="result_text">Scaned Text:</string>
+    <string name="result_text">Scanned Text:</string>
     <string name="copy_text">Copy Text</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -25,8 +25,9 @@
     <string name="save_toast">Text saved</string>
     <string name="delete_toast">Text deleted</string>
     <string name="home">Home</string>
-    <string name="confirm_delete_title">Are you sure?</string>
-    <string name="confirm_delete_message">You won\'t be able to revert this!</string>
+    <string name="confirm_delete_title">Are you sure to delete?</string>
+    <string name="confirm_delete_message">You won\'t be able to revert this change once it is done!</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="faq" translatable="false">FAQ</string>
 </resources>
