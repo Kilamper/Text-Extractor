@@ -25,4 +25,8 @@
     <string name="save_toast">Text saved</string>
     <string name="delete_toast">Text deleted</string>
     <string name="home">Home</string>
+    <string name="confirm_delete_title">Are you sure?</string>
+    <string name="confirm_delete_message">You won\'t be able to revert this!</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

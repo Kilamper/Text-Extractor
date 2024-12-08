@@ -32,6 +32,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import kotlinx.coroutines.CoroutineScope
 
+@Suppress("DEPRECATION")
 class AuthActivity : ComponentActivity() {
 
     private val GOOGLE_SIGN_IN = 133
