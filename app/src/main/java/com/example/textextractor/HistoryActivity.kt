@@ -35,7 +35,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import java.text.DateFormat
 import java.util.Locale
@@ -43,6 +42,7 @@ import java.util.Locale
 class HistoryActivity : ComponentActivity() {
 
     private var currentUser: FirebaseUser? = null
+    private val reloadTrigger = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +51,9 @@ class HistoryActivity : ComponentActivity() {
             currentUser = FirebaseAuth.getInstance().currentUser
             val userId = currentUser?.uid
 
-            LaunchedEffect(userId) {
+            LaunchedEffect(userId, reloadTrigger.value) {
                 if (userId != null) {
+                    scannedTexts.clear()
                     FirebaseFirestore.getInstance()
                         .document("users/$userId")
                         .collection("scannedTexts")
@@ -68,7 +69,7 @@ class HistoryActivity : ComponentActivity() {
                 }
             }
 
-            HistoryScreen(scannedTexts, currentUser, ::goToActivity)
+            HistoryScreen(scannedTexts, currentUser, ::goToActivity, ::triggerReload)
         }
     }
 
@@ -76,10 +77,19 @@ class HistoryActivity : ComponentActivity() {
         val intent = Intent(this, activity)
         startActivity(intent)
     }
+
+    private fun triggerReload() {
+        reloadTrigger.value = !reloadTrigger.value
+    }
 }
 
 @Composable
-fun HistoryScreen(scannedTexts: List<ScannedText>, currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
+fun HistoryScreen(
+    scannedTexts: List<ScannedText>,
+    currentUser: FirebaseUser?,
+    goToActivity: (Class<*>) -> Unit,
+    triggerReload: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
@@ -93,7 +103,7 @@ fun HistoryScreen(scannedTexts: List<ScannedText>, currentUser: FirebaseUser?, g
             modifier = Modifier.padding(top = 40.dp).padding(16.dp).verticalScroll(rememberScrollState())
         ) {
             scannedTexts.forEach { scannedText ->
-                TextCard(scannedText, currentUser, scannedTexts.toMutableList())
+                TextCard(scannedText, currentUser, scannedTexts.toMutableList(), triggerReload)
             }
         }
     }
@@ -215,7 +225,12 @@ fun UserMenu(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
 }
 
 @Composable
-fun TextCard(scannedText: ScannedText, currentUser: FirebaseUser?, scannedTexts: MutableList<ScannedText>) {
+fun TextCard(
+    scannedText: ScannedText,
+    currentUser: FirebaseUser?,
+    scannedTexts: MutableList<ScannedText>,
+    triggerReload: () -> Unit
+) {
     val clipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
     val showDialog = remember { mutableStateOf(false) }
@@ -236,6 +251,7 @@ fun TextCard(scannedText: ScannedText, currentUser: FirebaseUser?, scannedTexts:
                             .addOnSuccessListener {
                                 scannedTexts.remove(scannedText)
                                 Toast.makeText(context, R.string.delete_toast, Toast.LENGTH_SHORT).show()
+                                triggerReload() // Trigger reload
                             }
                         showDialog.value = false
                     }
