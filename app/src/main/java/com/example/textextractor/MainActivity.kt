@@ -7,21 +7,50 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.text.method.ScrollingMovementMethod
 import android.util.TypedValue
 import android.view.MenuInflater
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.PopupMenu
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.graphics.drawable.toBitmap
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,18 +64,6 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var cameraImage: ImageView
-    private lateinit var captureImgBtn: Button
-    private lateinit var selectImgBtn: Button
-
-    private lateinit var resultText: TextView
-    private lateinit var copyTextBtn: Button
-    private lateinit var saveTextBtn: Button
-
-    private lateinit var menuBtn: Button
-    private lateinit var logInBtn: Button
-    private lateinit var userIcon: Button
-
     private var currentUser: FirebaseUser? = null
     private val db = FirebaseFirestore.getInstance()
 
@@ -55,56 +72,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
     private lateinit var selectImageLauncher: ActivityResultLauncher<String>
 
+    private var cameraImage by mutableStateOf<Bitmap?>(null)
+    private var resultText by mutableStateOf("")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        cameraImage = findViewById(R.id.cameraImage)
-        captureImgBtn = findViewById(R.id.captureImgBtn)
-        selectImgBtn = findViewById(R.id.selectImgBtn)
+        currentUser = FirebaseAuth.getInstance().currentUser
 
-        resultText = findViewById(R.id.resultText)
-        copyTextBtn = findViewById(R.id.copyTextBtn)
-        saveTextBtn = findViewById(R.id.saveTextBtn)
-
-        menuBtn = findViewById(R.id.menuBtn)
-        logInBtn = findViewById(R.id.logInBtn)
-        userIcon = findViewById(R.id.userIcon)
-
-        // Setup
-        setup()
-    }
-
-    private fun setup() {
-        title = "Main"
-
-        // Menu button
-        menuBtn.setOnClickListener {
-            val popupMenu = PopupMenu(this, menuBtn)
-            val inflater: MenuInflater = menuInflater
-            inflater.inflate(R.menu.menu_options, popupMenu.menu)
-
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.settings -> {
-                        Toast.makeText(this, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
-                        true
-                    }
-
-                    R.id.history -> {
-                        goToActivity(HistoryActivity::class.java)
-                        true
-                    }
-
-                    R.id.help -> {
-                        goToActivity(HelpActivity::class.java)
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popupMenu.show()
-        }
+        cameraImage = AppCompatResources.getDrawable(this, R.drawable.baseline_image_24)!!.toBitmap()
 
         // Capture image permission launcher
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -120,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             if (success) {
                 currentPhotoPath?.let { path ->
                     val bitmap = BitmapFactory.decodeFile(path)
-                    cameraImage.setImageBitmap(bitmap)
+                    cameraImage = bitmap
                     recognizeText(bitmap)
                 }
             }
@@ -130,62 +106,27 @@ class MainActivity : AppCompatActivity() {
         selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
-                cameraImage.setImageBitmap(bitmap)
+                cameraImage = bitmap
                 recognizeText(bitmap)
             }
         }
 
-        // Capture image button
-        captureImgBtn.setOnClickListener {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        setContent {
+            MainScreen(
+                currentUser,
+                ::goToActivity,
+                requestPermissionLauncher,
+                selectImageLauncher,
+                cameraImage!!,
+                resultText,
+                db
+            )
         }
+    }
 
-        // Select image button
-        selectImgBtn.setOnClickListener {
-            selectImageLauncher.launch("image/*")
-        }
-
-        // Log in button
-        logInBtn.setOnClickListener {
-            goToActivity(AuthActivity::class.java)
-        }
-
-        // Check if user is logged in
-        currentUser = FirebaseAuth.getInstance().currentUser
-
-        if (currentUser != null) {
-            userIcon.visibility = Button.VISIBLE
-            logInBtn.visibility = Button.INVISIBLE
-            val widthInDp = 50
-            val widthInPx = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                widthInDp.toFloat(),
-                resources.displayMetrics
-            ).toInt()
-            userIcon.layoutParams.width = widthInPx
-            logInBtn.layoutParams.width = 0
-            userIcon.setOnClickListener {
-                val popupMenu = PopupMenu(this, userIcon)
-                val inflater: MenuInflater = menuInflater
-                inflater.inflate(R.menu.user_options, popupMenu.menu)
-
-                // Set the user email in the menu
-                val userEmailMenuItem = popupMenu.menu.findItem(R.id.userEmail)
-                userEmailMenuItem.title = currentUser?.email ?: ""
-
-                popupMenu.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.logOut -> {
-                            FirebaseAuth.getInstance().signOut()
-                            recreate()
-                            true
-                        }
-                        else -> false
-                    }
-                }
-                popupMenu.show() // Show the popup menu
-            }
-        }
+    private fun goToActivity(activity: Class<*>) {
+        val intent = Intent(this, activity)
+        startActivity(intent)
     }
 
     private fun createImageFile(): File {
@@ -214,35 +155,135 @@ class MainActivity : AppCompatActivity() {
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
         recognizer.process(image).addOnSuccessListener { ocrText ->
-            resultText.text = ocrText.text
-            resultText.movementMethod = ScrollingMovementMethod()
-            copyTextBtn.visibility = Button.VISIBLE
-            copyTextBtn.setOnClickListener {
-                val clipboard = ContextCompat.getSystemService(this, android.content.ClipboardManager::class.java)
-                val clip = android.content.ClipData.newPlainText("recognized text", ocrText.text)
-                clipboard?.setPrimaryClip(clip)
-                Toast.makeText(this, "Text Copied", Toast.LENGTH_SHORT).show()
-            }
-            if (currentUser != null) {
-                copyTextBtn.layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-                saveTextBtn.layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-                saveTextBtn.visibility = Button.VISIBLE
-                saveTextBtn.setOnClickListener {
-                    db.collection("users").document(currentUser!!.uid).collection("scannedTexts").add(mapOf("text" to resultText.text.toString(), "date" to Date.from(java.time.Instant.now())))
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Text saved", Toast.LENGTH_SHORT).show()
-                        }.addOnFailureListener { e ->
-                            Toast.makeText(this, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                }
-            }
+            resultText = ocrText.text
         }.addOnFailureListener { e ->
             Toast.makeText(this, "Failed to recognize text: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
+}
 
-    private fun goToActivity(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        startActivity(intent)
+@Composable
+fun MainScreen(
+    currentUser: FirebaseUser?,
+    goToActivity: (Class<*>) -> Unit,
+    requestPermissionLauncher: ActivityResultLauncher<String>,
+    selectImageLauncher: ActivityResultLauncher<String>,
+    cameraImage: Bitmap,
+    resultText: String,
+    db: FirebaseFirestore
+) {
+    Box(
+        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        HeaderBar(
+            currentUser = currentUser,
+            onLogInClick = { goToActivity(AuthActivity::class.java) },
+            goToActivity = goToActivity,
+            activityId = 0
+        )
+        Column(
+            modifier = Modifier.padding(top = 40.dp).padding(16.dp).verticalScroll(
+                rememberScrollState()
+            )
+        ) {
+            ImageSection(requestPermissionLauncher, selectImageLauncher, cameraImage)
+            ResultSection(resultText, currentUser, db)
+        }
+    }
+}
+
+@Composable
+fun ImageSection(
+    requestPermissionLauncher: ActivityResultLauncher<String>,
+    selectImageLauncher: ActivityResultLauncher<String>,
+    cameraImage: Bitmap
+) {
+    Column(modifier = Modifier.wrapContentHeight()) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(
+                bitmap = cameraImage.asImageBitmap(),
+                contentDescription = stringResource(R.string.camera_image),
+                modifier = Modifier.size(180.dp).padding(top = 8.dp)
+            )
+        }
+        Button(
+            onClick = { requestPermissionLauncher.launch(Manifest.permission.CAMERA) },
+            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))
+        ) {
+            Text(text = stringResource(R.string.capture_image))
+        }
+        Button(
+            onClick = { selectImageLauncher.launch("image/*") },
+            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))
+        ) {
+            Text(text = stringResource(R.string.select_image))
+        }
+    }
+}
+
+@Composable
+fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFirestore) {
+    val context = LocalContext.current
+
+    Column(modifier = Modifier.wrapContentHeight()) {
+        Text(
+            text = stringResource(R.string.result_text),
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+        )
+        Card(
+            modifier = Modifier.height(250.dp)
+                .fillMaxWidth().verticalScroll(rememberScrollState())
+        ) {
+            Text(
+                text = resultText,
+                modifier = Modifier.padding(8.dp).padding(vertical = 4.dp).fillMaxWidth(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = colorResource(R.color.black),
+                textAlign = TextAlign.Start,
+                softWrap = true
+            )
+        }
+        if (resultText.isNotEmpty()) {
+            Row(
+                modifier = Modifier.fillMaxWidth().wrapContentHeight()
+            ) {
+                Button(
+                    onClick = {
+                        val clipboard = ContextCompat.getSystemService(context, android.content.ClipboardManager::class.java)
+                        val clip = android.content.ClipData.newPlainText("recognized text", resultText)
+                        clipboard?.setPrimaryClip(clip)
+                        Toast.makeText(context, R.string.copy_toast, Toast.LENGTH_SHORT).show()
+                    },
+                    modifier = Modifier.padding(top = 8.dp).fillMaxWidth().weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))
+                ) {
+                    Text(text = stringResource(R.string.copy_text))
+                }
+                if (currentUser != null) {
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Button(
+                        onClick = {
+                            db.collection("users").document(currentUser.uid).collection("scannedTexts").add(mapOf("text" to resultText, "date" to Date.from(java.time.Instant.now())))
+                                .addOnSuccessListener {
+                                    Toast.makeText(context, R.string.save_toast, Toast.LENGTH_SHORT).show()
+                                }.addOnFailureListener { e ->
+                                    Toast.makeText(context, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        },
+                        modifier = Modifier.padding(top = 8.dp).fillMaxWidth().weight(1f),
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))
+                    ) {
+                        Text(text = stringResource(R.string.save_text))
+                    }
+                }
+            }
+        }
     }
 }

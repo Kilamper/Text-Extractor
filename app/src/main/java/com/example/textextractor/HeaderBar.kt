@@ -92,20 +92,22 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
         onDismissRequest = { expanded.value = false },
         modifier = Modifier.padding(end = 8.dp)
     ) {
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.home)) },
-            onClick = {
-                goToActivity(MainActivity::class.java)
-                expanded.value = false
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_home_filled_24),
-                    tint = Color.Black,
-                    contentDescription = null
-                )
-            }
-        )
+        if (activityId != 0) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.home)) },
+                onClick = {
+                    goToActivity(MainActivity::class.java)
+                    expanded.value = false
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_home_filled_24),
+                        tint = Color.Black,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
         if (activityId != 1) {
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.history)) },
@@ -122,20 +124,22 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
                 }
             )
         }
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.settings)) },
-            onClick = {
-                Toast.makeText(context, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
-                expanded.value = false
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_settings_24),
-                    tint = Color.Black,
-                    contentDescription = null
-                )
-            }
-        )
+        if (activityId != 2) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.settings)) },
+                onClick = {
+                    Toast.makeText(context, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
+                    expanded.value = false
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_settings_24),
+                        tint = Color.Black,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
         if (activityId != 3) {
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.help)) },

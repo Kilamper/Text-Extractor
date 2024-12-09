@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
@@ -45,10 +44,12 @@ class HistoryActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        currentUser = FirebaseAuth.getInstance().currentUser
+        val userId = currentUser?.uid
+
         setContent {
             val scannedTexts = remember { mutableStateListOf<ScannedText>() }
-            currentUser = FirebaseAuth.getInstance().currentUser
-            val userId = currentUser?.uid
 
             LaunchedEffect(userId, reloadTrigger.value) {
                 if (userId != null) {
