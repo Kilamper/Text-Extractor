@@ -18,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,14 +30,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -238,10 +237,25 @@ fun ImageSection(
 fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFirestore) {
     val context = LocalContext.current
     var editableText by remember { mutableStateOf(resultText) }
+    var showAlert by remember { mutableStateOf(false) }
 
-    // Sincroniza editableText con resultText cuando este cambie
     LaunchedEffect(resultText) {
         editableText = resultText
+    }
+
+    if (showAlert) {
+        AlertDialog(
+            onDismissRequest = { showAlert = false },
+            text = { Text(text = stringResource(R.string.limit_toast)) },
+            confirmButton = {
+                Button(
+                    onClick = { showAlert = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))
+                ) {
+                    Text(text = stringResource(R.string.confirm))
+                }
+            }
+        )
     }
 
     Column(modifier = Modifier.wrapContentHeight()) {
@@ -251,24 +265,22 @@ fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFi
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         )
         Card(
-            modifier = Modifier.height(250.dp)
-                .fillMaxWidth().verticalScroll(rememberScrollState())
-    ) {
-    BasicTextField(
-        value = editableText,
-        onValueChange = { editableText = it },
-        modifier = Modifier.padding(8.dp).fillMaxWidth(),
-        textStyle = MaterialTheme.typography.bodyMedium.copy(color = colorResource(R.color.black)),
-        decorationBox = { innerTextField ->
-            Box(
-                modifier = Modifier
-                    .background(Color.Transparent)
-                    .padding(4.dp)
-            ) {
-                innerTextField()
-            }
+            modifier = Modifier.height(250.dp).fillMaxWidth()
+        ) {
+            TextField(
+                value = editableText,
+                onValueChange = { editableText = it },
+                modifier = Modifier.padding(8.dp).padding(vertical = 4.dp)
+                    .fillMaxWidth().verticalScroll(rememberScrollState()),
+                textStyle = MaterialTheme.typography.bodyMedium,
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.Transparent,
+                    unfocusedTextColor = Color.Black,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent
+                )
+            )
         }
-    ) }
         if (editableText.isNotEmpty()) {
             Row(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
@@ -289,12 +301,18 @@ fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFi
                     Spacer(modifier = Modifier.width(6.dp))
                     Button(
                         onClick = {
-                            db.collection("users").document(currentUser.uid).collection("scannedTexts").add(
-                                mapOf("text" to editableText, "date" to Date.from(java.time.Instant.now()))
-                            ).addOnSuccessListener {
-                                Toast.makeText(context, R.string.save_toast, Toast.LENGTH_SHORT).show()
-                            }.addOnFailureListener { e ->
-                                Toast.makeText(context, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
+                            val userDocRef = db.collection("users").document(currentUser.uid).collection("scannedTexts")
+                            userDocRef.get().addOnSuccessListener { documents ->
+                                if (documents.size() >= 30) {
+                                    showAlert = true
+                                } else {
+                                    userDocRef.add(mapOf("text" to editableText, "date" to Date.from(java.time.Instant.now())))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(context, R.string.save_toast, Toast.LENGTH_SHORT).show()
+                                        }.addOnFailureListener { e ->
+                                            Toast.makeText(context, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
                             }
                         },
                         modifier = Modifier.padding(top = 8.dp).fillMaxWidth().weight(1f),
