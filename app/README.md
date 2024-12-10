@@ -1,10 +1,20 @@
-# PAMN - Proyecto de final de asignatura
+# Memoria - Text Extractor 
 
-## Vista general
-Este proyecto consiste en una aplicación móvil que permite escanear el texto de una imagen y realizar diversas funciones con el mismo.
+## Introducción
+Text Extractor consiste en una aplicación móvil que permite escanear el texto de una imagen y realizar diversas 
+funciones con el mismo.
+
+## Objetivos
+El objetivo de este proyecto consiste en la realización de una aplicación móvil con diversas funcionalidades
+en la que se aproveche alguna de las características del mismo. A su vez, también era de interés la integración de una base de datos
+y un inicio de sesión.
+
+## Diseño
+El diseño de la aplicación se ha
+
 ---
 
-### Funcionalidades principales
+## Funcionalidades principales
 
 1. **Escaneo de texto**:
     - Obtiene el texto de una imagen.
@@ -25,8 +35,6 @@ Este proyecto consiste en una aplicación móvil que permite escanear el texto d
 6. **Ayuda**:
     - Muestra una lista de preguntas y respuestas frecuentes para orientar al usuario en el funcionamiento básico de la aplicación.
 
-### Registro de usuarios
+## Registro de usuarios
 - **Sign Up**: Registro mediante email y contraseña o a través de una cuenta de Google.
 - **Login**: Login seguro gracias a Firebase.
-
-
