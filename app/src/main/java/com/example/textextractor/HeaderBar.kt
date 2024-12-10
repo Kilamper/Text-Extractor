@@ -128,7 +128,7 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.settings)) },
                 onClick = {
-                    Toast.makeText(context, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show()
+                    goToActivity(SettingsActivity::class.java)
                     expanded.value = false
                 },
                 leadingIcon = {

@@ -31,17 +31,23 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -230,6 +236,27 @@ fun ImageSection(
 @Composable
 fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFirestore) {
     val context = LocalContext.current
+    var editableText by remember { mutableStateOf(resultText) }
+    var showAlert by remember { mutableStateOf(false) }
+
+    LaunchedEffect(resultText) {
+        editableText = resultText
+    }
+
+    if (showAlert) {
+        AlertDialog(
+            onDismissRequest = { showAlert = false },
+            text = { Text(text = stringResource(R.string.limit_toast)) },
+            confirmButton = {
+                Button(
+                    onClick = { showAlert = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))
+                ) {
+                    Text(text = stringResource(R.string.confirm))
+                }
+            }
+        )
+    }
 
     Column(modifier = Modifier.wrapContentHeight()) {
         Text(
@@ -238,26 +265,30 @@ fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFi
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         )
         Card(
-            modifier = Modifier.height(250.dp)
-                .fillMaxWidth().verticalScroll(rememberScrollState())
+            modifier = Modifier.height(250.dp).fillMaxWidth()
         ) {
-            Text(
-                text = resultText,
-                modifier = Modifier.padding(8.dp).padding(vertical = 4.dp).fillMaxWidth(),
-                style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(R.color.black),
-                textAlign = TextAlign.Start,
-                softWrap = true
+            TextField(
+                value = editableText,
+                onValueChange = { editableText = it },
+                modifier = Modifier.padding(8.dp).padding(vertical = 4.dp)
+                    .fillMaxWidth().verticalScroll(rememberScrollState()),
+                textStyle = MaterialTheme.typography.bodyMedium,
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.Transparent,
+                    unfocusedTextColor = Color.Black,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent
+                )
             )
         }
-        if (resultText.isNotEmpty()) {
+        if (editableText.isNotEmpty()) {
             Row(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
             ) {
                 Button(
                     onClick = {
                         val clipboard = ContextCompat.getSystemService(context, android.content.ClipboardManager::class.java)
-                        val clip = android.content.ClipData.newPlainText("recognized text", resultText)
+                        val clip = android.content.ClipData.newPlainText("recognized text", editableText)
                         clipboard?.setPrimaryClip(clip)
                         Toast.makeText(context, R.string.copy_toast, Toast.LENGTH_SHORT).show()
                     },
@@ -270,12 +301,19 @@ fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFi
                     Spacer(modifier = Modifier.width(6.dp))
                     Button(
                         onClick = {
-                            db.collection("users").document(currentUser.uid).collection("scannedTexts").add(mapOf("text" to resultText, "date" to Date.from(java.time.Instant.now())))
-                                .addOnSuccessListener {
-                                    Toast.makeText(context, R.string.save_toast, Toast.LENGTH_SHORT).show()
-                                }.addOnFailureListener { e ->
-                                    Toast.makeText(context, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
+                            val userDocRef = db.collection("users").document(currentUser.uid).collection("scannedTexts")
+                            userDocRef.get().addOnSuccessListener { documents ->
+                                if (documents.size() >= 30) {
+                                    showAlert = true
+                                } else {
+                                    userDocRef.add(mapOf("text" to editableText, "date" to Date.from(java.time.Instant.now())))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(context, R.string.save_toast, Toast.LENGTH_SHORT).show()
+                                        }.addOnFailureListener { e ->
+                                            Toast.makeText(context, "Failed to save text: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        }
                                 }
+                            }
                         },
                         modifier = Modifier.padding(top = 8.dp).fillMaxWidth().weight(1f),
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.light_purple))

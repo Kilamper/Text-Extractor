@@ -40,4 +40,7 @@
     <string name="answer_4">You can copy to the clipboard the scanned text by clicking on the \'Copy Text\' button.</string>
     <string name="question_5">5. Can I save the scanned text for later?</string>
     <string name="answer_5">You can save the scanned text by clicking on the \'Save Text\' button and view it in the history section.</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="language">Language</string>
+    <string name="limit_toast">You have reached the limit of saved texts. Please delete one in order to save a new text.</string>
 </resources>

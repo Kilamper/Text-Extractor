@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import com.google.firebase.firestore.Query
 import java.text.DateFormat
 import java.util.Locale
 
@@ -57,6 +58,7 @@ class HistoryActivity : ComponentActivity() {
                     FirebaseFirestore.getInstance()
                         .document("users/$userId")
                         .collection("scannedTexts")
+                        .orderBy("date", Query.Direction.DESCENDING)
                         .get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
@@ -140,14 +142,16 @@ fun TextCard(
                                 triggerReload() // Trigger reload
                             }
                         showDialog.value = false
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2b77c0))
                 ) {
                     Text(text = stringResource(R.string.confirm))
                 }
             },
             dismissButton = {
                 Button(
-                    onClick = { showDialog.value = false }
+                    onClick = { showDialog.value = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFc62e2e))
                 ) {
                     Text(text = stringResource(R.string.cancel))
                 }
