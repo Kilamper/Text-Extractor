@@ -13,10 +13,12 @@ material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 material3 = "1.3.1"
+okhttpVersion = "4.10.0"
 playServicesAuth = "21.2.0"
 textRecognition = "16.0.1"
 firebaseAuthKtx = "23.1.0"
 firebaseFirestoreKtx = "25.1.1"
+translate = "17.0.3"
 ui = "1.7.5"
 foundationLayoutAndroid = "1.7.0"
 
@@ -38,6 +40,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttpVersion" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
 text-recognition-chinese = { module = "com.google.mlkit:text-recognition-chinese", version.ref = "textRecognition" }
@@ -47,6 +50,7 @@ text-recognition-korean = { module = "com.google.mlkit:text-recognition-korean",
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+translate = { module = "com.google.mlkit:translate", version.ref = "translate" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
