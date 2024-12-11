@@ -1,9 +1,12 @@
 package com.example.textextractor
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,13 +14,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class HelpActivity : ComponentActivity() {
+class HelpActivity : AppCompatActivity() {
 
     private var currentUser: FirebaseUser? = null
 
@@ -38,8 +42,20 @@ class HelpActivity : ComponentActivity() {
 
 @Composable
 fun HelpScreen(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+    val isDarkTheme by remember { mutableStateOf(sharedPreferences.getBoolean("dark_theme", false)) }
+    var selectedLanguage by remember { mutableStateOf(sharedPreferences.getString("language", "en") ?: "en") }
+
+    LaunchedEffect(isDarkTheme) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(colorResource(R.color.background)),
         contentAlignment = Alignment.TopCenter
     ) {
         HeaderBar(
@@ -63,7 +79,7 @@ fun FAQSection() {
         Text(
             text = stringResource(id = R.string.faq),
             style = MaterialTheme.typography.headlineLarge,
-            color = colorResource(id = R.color.black),
+            color = colorResource(id = R.color.text_color),
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -82,13 +98,13 @@ fun FAQItem(question: String, answer: String) {
         Text(
             text = question,
             style = MaterialTheme.typography.bodyLarge,
-            color = colorResource(id = R.color.black),
+            color = colorResource(id = R.color.text_color),
             modifier = Modifier.padding(bottom = 4.dp)
         )
         Text(
             text = answer,
             style = MaterialTheme.typography.bodyMedium,
-            color = colorResource(id = R.color.black)
+            color = colorResource(id = R.color.text_color)
         )
     }
 }

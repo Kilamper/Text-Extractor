@@ -17,6 +17,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -73,7 +75,6 @@ fun HeaderBar(
 
 @Composable
 fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
-    val context = LocalContext.current
     val expanded = remember { mutableStateOf(false) }
 
     IconButton(
@@ -90,11 +91,14 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
     DropdownMenu(
         expanded = expanded.value,
         onDismissRequest = { expanded.value = false },
-        modifier = Modifier.padding(end = 8.dp)
+        modifier = Modifier.padding(end = 8.dp),
+        containerColor = colorResource(R.color.menu_color)
     ) {
         if (activityId != 0) {
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.home)) },
+                text = { Text(
+                    stringResource(R.string.home),
+                ) },
                 onClick = {
                     goToActivity(MainActivity::class.java)
                     expanded.value = false
@@ -102,10 +106,13 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_home_filled_24),
-                        tint = Color.Black,
                         contentDescription = null
                     )
-                }
+                },
+                colors = MenuDefaults.itemColors(
+                    textColor = colorResource(R.color.text_color),
+                    leadingIconColor = colorResource(R.color.text_color)
+                )
             )
         }
         if (activityId != 1) {
@@ -118,10 +125,13 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_history_24),
-                        tint = Color.Black,
                         contentDescription = null
                     )
-                }
+                },
+                colors = MenuDefaults.itemColors(
+                    textColor = colorResource(R.color.text_color),
+                    leadingIconColor = colorResource(R.color.text_color)
+                )
             )
         }
         if (activityId != 2) {
@@ -134,10 +144,13 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_settings_24),
-                        tint = Color.Black,
                         contentDescription = null
                     )
-                }
+                },
+                colors = MenuDefaults.itemColors(
+                    textColor = colorResource(R.color.text_color),
+                    leadingIconColor = colorResource(R.color.text_color)
+                )
             )
         }
         if (activityId != 3) {
@@ -150,10 +163,14 @@ fun BurgerMenu(goToActivity: (Class<*>) -> Unit, activityId: Int) {
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_help_outline_24),
-                        tint = Color.Black,
+                        tint = colorResource(R.color.text_color),
                         contentDescription = null
                     )
-                }
+                },
+                colors = MenuDefaults.itemColors(
+                    textColor = colorResource(R.color.text_color),
+                    leadingIconColor = colorResource(R.color.text_color)
+                )
             )
         }
     }
@@ -179,12 +196,16 @@ fun UserMenu(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
             offset = DpOffset.Unspecified,
+            containerColor = colorResource(R.color.menu_color)
         ) {
             DropdownMenuItem(
                 text = { Text(currentUser?.email ?: "") },
                 onClick = {
                     expanded.value = false
-                }
+                },
+                colors = MenuDefaults.itemColors(
+                    textColor = colorResource(R.color.text_color)
+                )
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.log_out)) },
@@ -196,10 +217,14 @@ fun UserMenu(currentUser: FirebaseUser?, goToActivity: (Class<*>) -> Unit) {
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_logout_24),
-                        tint = Color.Black,
+                        tint = colorResource(R.color.text_color),
                         contentDescription = null
                     )
-                }
+                },
+                colors = MenuDefaults.itemColors(
+                    textColor = colorResource(R.color.text_color),
+                    leadingIconColor = colorResource(R.color.text_color)
+                )
             )
         }
     }
