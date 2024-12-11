@@ -1,0 +1,45 @@
+<resources>
+    <string name="log_in">Se connecter</string>
+    <string name="camera_image">Image de la caméra</string>
+    <string name="capture_image">Prendre une photo</string>
+    <string name="select_image">Sélectionner une image</string>
+    <string name="result_text">Texte scanné :</string>
+    <string name="copy_text">Copier le texte</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="log_in_button">Connexion</string>
+    <string name="settings">Paramètres</string>
+    <string name="history">Historique</string>
+    <string name="help">Aide</string>
+    <string name="log_out">Se déconnecter</string>
+    <string name="save_text">Enregistrer le texte</string>
+    <string name="app_icon">Icône de l\'application</string>
+    <string name="close">Fermer</string>
+    <string name="log_in_to_continue">Connectez-vous pour continuer</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="google_button">Connexion avec Google</string>
+    <string name="return_back">Retour</string>
+    <string name="copy_toast">Texte copié</string>
+    <string name="save_toast">Texte enregistré</string>
+    <string name="delete_toast">Texte supprimé</string>
+    <string name="home">Accueil</string>
+    <string name="confirm_delete_title">Êtes-vous sûr de vouloir supprimer?</string>
+    <string name="confirm_delete_message">Vous ne pourrez pas annuler cette action une fois qu\'elle sera effectuée!</string>
+    <string name="confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
+    <string name="faq" translatable="false">FAQ</string>
+    <string name="question_1">1. Comment prendre une photo?</string>
+    <string name="answer_1">Pour prendre une photo, cliquez sur "Prendre une photo" et accordez les permissions de caméra.</string>
+    <string name="question_2">2. Puis-je sélectionner une image de ma galerie?</string>
+    <string name="answer_2">Oui, vous pouvez le faire en cliquant sur "Sélectionner une image".</string>
+    <string name="question_3">3. Comment scanner le texte d\'une image?</string>
+    <string name="answer_3">Vous pouvez scanner le texte d\'une image en cliquant sur l\'icône de la caméra et en sélectionnant une image dans la galerie ou en prenant une photo.</string>
+    <string name="question_4">4. Comment copier le texte scanné ?</string>
+    <string name="answer_4">Vous pouvez copier le texte scanné dans le presse-papiers en cliquant sur le bouton "Copier le texte".</string>
+    <string name="question_5">5. Puis-je enregistrer le texte scanné pour plus tard?</string>
+    <string name="answer_5">Vous pouvez enregistrer le texte scanné en cliquant sur le bouton "Enregistrer le texte" et le consulter dans la section historique.</string>
+    <string name="dark_theme">Thème sombre</string>
+    <string name="language">Langue</string>
+    <string name="limit_toast">Vous avez atteint la limite de textes enregistrés. Veuillez en supprimer un pour en sauvegarder un nouveau.</string>
+</resources>

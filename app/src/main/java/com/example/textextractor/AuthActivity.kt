@@ -1,5 +1,6 @@
 package com.example.textextractor
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -30,6 +31,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.CoroutineScope
 
 @Suppress("DEPRECATION")
@@ -146,6 +148,14 @@ fun AuthScreen(
     val passwordFocusRequester = remember { FocusRequester() }
     var isEmailFocused by remember { mutableStateOf(false) }
     var isPasswordFocused by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+    val selectedLanguage by remember { mutableStateOf(sharedPreferences.getString("language", "en") ?: "en") }
+
+    LaunchedEffect(selectedLanguage) {
+        setLocale(context, selectedLanguage)
+    }
 
     Box(
         modifier = Modifier

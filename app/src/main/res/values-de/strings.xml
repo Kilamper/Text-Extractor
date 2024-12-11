@@ -1,0 +1,45 @@
+<resources>
+    <string name="log_in">Anmelden</string>
+    <string name="camera_image">Kamera Bild</string>
+    <string name="capture_image">Foto aufnehmen</string>
+    <string name="select_image">Bild auswählen</string>
+    <string name="result_text">Gescanntes Text:</string>
+    <string name="copy_text">Text kopieren</string>
+    <string name="email">E-Mail</string>
+    <string name="password">Passwort</string>
+    <string name="sign_up">Registrieren</string>
+    <string name="log_in_button">Anmelden</string>
+    <string name="settings">Einstellungen</string>
+    <string name="history">Verlauf</string>
+    <string name="help">Hilfe</string>
+    <string name="log_out">Abmelden</string>
+    <string name="save_text">Text speichern</string>
+    <string name="app_icon">App-Symbol</string>
+    <string name="close">Schließen</string>
+    <string name="log_in_to_continue">Melden Sie sich an, um fortzufahren</string>
+    <string name="welcome">Willkommen</string>
+    <string name="google_button">Mit Google anmelden</string>
+    <string name="return_back">Zurückkehren</string>
+    <string name="copy_toast">Text kopiert</string>
+    <string name="save_toast">Text gespeichert</string>
+    <string name="delete_toast">Text gelöscht</string>
+    <string name="home">Startseite</string>
+    <string name="confirm_delete_title">Möchten Sie wirklich löschen?</string>
+    <string name="confirm_delete_message">Diese Änderung kann nicht rückgängig gemacht werden!</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="faq" translatable="false">FAQ</string>
+    <string name="question_1">1. Wie mache ich ein Foto?</string>
+    <string name="answer_1">Um ein Foto zu machen, klicken Sie auf "Foto aufnehmen" und erteilen Sie Kameraberechtigungen.</string>
+    <string name="question_2">2. Kann ich ein Bild aus meiner Galerie auswählen?</string>
+    <string name="answer_2">Ja, Sie können dies tun, indem Sie auf "Bild auswählen" klicken.</string>
+    <string name="question_3">3. Wie kann ich den Text aus einem Bild scannen?</string>
+    <string name="answer_3">Sie können den Text aus einem Bild scannen, indem Sie auf das Kamerasymbol klicken und ein Bild aus der Galerie auswählen oder ein Foto machen.</string>
+    <string name="question_4">4. Wie kann ich den gescannten Text kopieren?</string>
+    <string name="answer_4">Sie können den gescannten Text in die Zwischenablage kopieren, indem Sie auf die Schaltfläche "Text kopieren" klicken.</string>
+    <string name="question_5">5. Kann ich den gescannten Text für später speichern?</string>
+    <string name="answer_5">Sie können den gescannten Text speichern, indem Sie auf die Schaltfläche "Text speichern" klicken und ihn im Verlaufsbereich anzeigen.</string>
+    <string name="dark_theme">Dunkles Thema</string>
+    <string name="language">Sprache</string>
+    <string name="limit_toast">Sie haben die Grenze der gespeicherten Texte erreicht. Bitte löschen Sie einen, um einen neuen Text zu speichern.</string>
+</resources>

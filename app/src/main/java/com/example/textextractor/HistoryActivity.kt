@@ -110,6 +110,10 @@ fun HistoryScreen(
         )
     }
 
+    LaunchedEffect(selectedLanguage) {
+        setLocale(context, selectedLanguage)
+    }
+
     Box(
         modifier = Modifier.fillMaxSize().background(colorResource(R.color.background)),
         contentAlignment = Alignment.TopCenter

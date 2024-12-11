@@ -1,0 +1,45 @@
+<resources>
+    <string name="log_in">Accedi</string>
+    <string name="camera_image">Immagine della fotocamera</string>
+    <string name="capture_image">Scatta una foto</string>
+    <string name="select_image">Seleziona un\'immagine</string>
+    <string name="result_text">Testo scansionato:</string>
+    <string name="copy_text">Copia testo</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Registrati</string>
+    <string name="log_in_button">Accedi</string>
+    <string name="settings">Impostazioni</string>
+    <string name="history">Cronologia</string>
+    <string name="help">Aiuto</string>
+    <string name="log_out">Disconnettiti</string>
+    <string name="save_text">Salva testo</string>
+    <string name="app_icon">Icona dell\'app</string>
+    <string name="close">Chiudi</string>
+    <string name="log_in_to_continue">Accedi per continuare</string>
+    <string name="welcome">Benvenuto</string>
+    <string name="google_button">Accedi con Google</string>
+    <string name="return_back">Torna indietro</string>
+    <string name="copy_toast">Testo copiato</string>
+    <string name="save_toast">Testo salvato</string>
+    <string name="delete_toast">Testo eliminato</string>
+    <string name="home">Home</string>
+    <string name="confirm_delete_title">Sei sicuro di voler eliminare?</string>
+    <string name="confirm_delete_message">Non sarai in grado di annullare questa azione una volta completata!</string>
+    <string name="confirm">Conferma</string>
+    <string name="cancel">Annulla</string>
+    <string name="faq" translatable="false">FAQ</string>
+    <string name="question_1">1. Come faccio a scattare una foto?</string>
+    <string name="answer_1">Per scattare una foto, fai clic su "Scatta una foto" e concedi le autorizzazioni della fotocamera.</string>
+    <string name="question_2">2. Posso selezionare un\'immagine dalla mia galleria?</string>
+    <string name="answer_2">Sì, puoi farlo facendo clic su "Seleziona un\'immagine".</string>
+    <string name="question_3">3. Come faccio a scansionare il testo da un\'immagine?</string>
+    <string name="answer_3">Puoi scansionare il testo da un\'immagine facendo clic sull\'icona della fotocamera e selezionando un\'immagine dalla galleria o scattando una foto.</string>
+    <string name="question_4">4. Come faccio a copiare il testo scansionato?</string>
+    <string name="answer_4">Puoi copiare il testo scansionato negli appunti facendo clic sul pulsante "Copia testo".</string>
+    <string name="question_5">5. Posso salvare il testo scansionato per dopo?</string>
+    <string name="answer_5">Puoi salvare il testo scansionato facendo clic sul pulsante "Salva testo" e visualizzarlo nella sezione cronologia.</string>
+    <string name="dark_theme">Tema scuro</string>
+    <string name="language">Lingua</string>
+    <string name="limit_toast">Hai raggiunto il limite di testi salvati. Elimina uno per poter salvare un nuovo testo.</string>
+</resources>

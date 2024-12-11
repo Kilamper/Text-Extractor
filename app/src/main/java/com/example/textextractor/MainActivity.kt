@@ -189,6 +189,10 @@ fun MainScreen(
         )
     }
 
+    LaunchedEffect(selectedLanguage) {
+        setLocale(context, selectedLanguage)
+    }
+
     Box(
         modifier = Modifier.fillMaxSize().wrapContentHeight()
             .background(colorResource(R.color.background)),
