@@ -28,7 +28,6 @@
 
         <activity
             android:name=".AuthActivity"
-            android:theme="@style/Theme.TextExtractor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -38,6 +37,7 @@
 
         <activity
             android:name=".HistoryActivity"
+            android:theme="@style/Theme.TextExtractor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -47,6 +47,7 @@
 
         <activity
             android:name=".HelpActivity"
+            android:theme="@style/Theme.TextExtractor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -56,6 +57,7 @@
 
         <activity
             android:name=".SettingsActivity"
+            android:theme="@style/Theme.TextExtractor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

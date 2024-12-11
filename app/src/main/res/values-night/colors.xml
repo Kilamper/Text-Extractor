@@ -8,7 +8,7 @@
     <color name="dark_purple">#321C5F</color>
     <color name="light_gray">#A0A0A0</color>
     <color name="dark_gray">#424242</color>
-    <color name="background">#FFFFFF</color>
-    <color name="text_color">#000000</color>
-    <color name="menu_color">#F3EDF7</color>
+    <color name="background">#3C3F41</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="menu_color">#424242</color>
 </resources>

@@ -1,28 +1,28 @@
 package com.example.textextractor
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.TypedValue
-import android.view.MenuInflater
-import android.widget.Button
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -52,7 +52,6 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -178,8 +177,21 @@ fun MainScreen(
     resultText: String,
     db: FirebaseFirestore
 ) {
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+    val isDarkTheme by remember { mutableStateOf(sharedPreferences.getBoolean("dark_theme", false)) }
+    var selectedLanguage by remember { mutableStateOf(sharedPreferences.getString("language", "en") ?: "en") }
+
+    LaunchedEffect(isDarkTheme) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
     Box(
-        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = Modifier.fillMaxSize().wrapContentHeight()
+            .background(colorResource(R.color.background)),
         contentAlignment = Alignment.TopCenter
     ) {
         HeaderBar(
@@ -189,7 +201,7 @@ fun MainScreen(
             activityId = 0
         )
         Column(
-            modifier = Modifier.padding(top = 40.dp).padding(16.dp).verticalScroll(
+            modifier = Modifier.fillMaxSize().padding(top = 40.dp).padding(16.dp).verticalScroll(
                 rememberScrollState()
             )
         ) {
@@ -262,6 +274,7 @@ fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFi
         Text(
             text = stringResource(R.string.result_text),
             style = MaterialTheme.typography.headlineSmall,
+            color = colorResource(R.color.text_color),
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         )
         Card(
@@ -270,12 +283,12 @@ fun ResultSection(resultText: String, currentUser: FirebaseUser?, db: FirebaseFi
             TextField(
                 value = editableText,
                 onValueChange = { editableText = it },
-                modifier = Modifier.padding(8.dp).padding(vertical = 4.dp)
+                modifier = Modifier.padding(4.dp).padding(vertical = 2.dp)
                     .fillMaxWidth().verticalScroll(rememberScrollState()),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = Color.Transparent,
-                    unfocusedTextColor = Color.Black,
+                    unfocusedTextColor = colorResource(R.color.text_color),
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent
                 )
