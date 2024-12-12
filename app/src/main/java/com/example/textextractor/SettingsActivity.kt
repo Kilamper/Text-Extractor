@@ -82,7 +82,6 @@ fun SettingsScreen(
 
     var isDarkTheme by remember { mutableStateOf(sharedPreferences.getBoolean("dark_theme", false)) }
     var selectedLanguage by remember { mutableStateOf(sharedPreferences.getString("language", "en") ?: "en") }
-    var isDropdownExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(isDarkTheme) {
         AppCompatDelegate.setDefaultNightMode(
@@ -109,137 +108,143 @@ fun SettingsScreen(
                 rememberScrollState()
             ).fillMaxSize()
         ) {
-            Text(
-                text = stringResource(R.string.settings),
-                style = MaterialTheme.typography.headlineMedium,
-                color = colorResource(R.color.text_color)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(200.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = stringResource(R.string.dark_theme),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = colorResource(R.color.text_color)
-                )
-                Switch(
-                    checked = isDarkTheme,
-                    onCheckedChange = {
-                        isDarkTheme = it
-                        editor.putBoolean("dark_theme", it).apply()
-                    },
-                    colors = SwitchDefaults.colors(
-                        checkedTrackColor = colorResource(R.color.light_purple)
-                    )
-                )
+            ThemeSection(isDarkTheme) { newTheme ->
+                isDarkTheme = newTheme
+                editor.putBoolean("dark_theme", newTheme).apply()
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(200.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+            LanguageSection(selectedLanguage) { newLanguage ->
+                selectedLanguage = newLanguage
+                editor.putString("language", newLanguage).apply()
+                setLocale(context, newLanguage)
+            }
+        }
+    }
+}
+
+@Composable
+fun ThemeSection(isDarkTheme: Boolean, onThemeChange: (Boolean) -> Unit) {
+    Text(
+        text = stringResource(R.string.settings),
+        style = MaterialTheme.typography.headlineMedium,
+        color = colorResource(R.color.text_color)
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.width(200.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = stringResource(R.string.dark_theme),
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(R.color.text_color)
+        )
+        Switch(
+            checked = isDarkTheme,
+            onCheckedChange = {
+                onThemeChange(it)
+            },
+            colors = SwitchDefaults.colors(
+                checkedTrackColor = colorResource(R.color.light_purple)
+            )
+        )
+    }
+}
+
+@Composable
+fun LanguageSection(selectedLanguage: String, onLanguageChange: (String) -> Unit) {
+    var isDropdownExpanded by remember { mutableStateOf(false) }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.width(200.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = stringResource(R.string.language),
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(R.color.text_color)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Box {
+            Button(
+                onClick = { isDropdownExpanded = true },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.light_purple)
+                ),
             ) {
-                Text(
-                    text = stringResource(R.string.language),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = colorResource(R.color.text_color)
+                Text(text = selectedLanguage)
+            }
+            DropdownMenu(
+                expanded = isDropdownExpanded,
+                onDismissRequest = { isDropdownExpanded = false },
+                containerColor = colorResource(R.color.menu_color)
+            ) {
+                DropdownMenuItem(
+                    onClick = {
+                        onLanguageChange("en")
+                        isDropdownExpanded = false
+                    },
+                    text = { Text("English") },
+                    colors = MenuDefaults.itemColors(
+                        textColor = colorResource(R.color.text_color)
+                    )
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Box {
-                    Button(
-                        onClick = { isDropdownExpanded = true },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(R.color.light_purple)
-                        ),
-                    ) {
-                        Text(text = selectedLanguage)
-                    }
-                    DropdownMenu(
-                        expanded = isDropdownExpanded,
-                        onDismissRequest = { isDropdownExpanded = false },
-                        containerColor = colorResource(R.color.menu_color)
-                    ) {
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedLanguage = "en"
-                                editor.putString("language", "en").apply()
-                                setLocale(context, "en")
-                                isDropdownExpanded = false
-                            },
-                            text = { Text("English") },
-                            colors = MenuDefaults.itemColors(
-                                textColor = colorResource(R.color.text_color)
-                            )
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedLanguage = "es"
-                                editor.putString("language", "es").apply()
-                                setLocale(context, "es")
-                                isDropdownExpanded = false
-                            },
-                            text = { Text("Español") },
-                            colors = MenuDefaults.itemColors(
-                                textColor = colorResource(R.color.text_color)
-                            )
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedLanguage = "fr"
-                                editor.putString("language", "fr").apply()
-                                setLocale(context, "fr")
-                                isDropdownExpanded = false
-                            },
-                            text = { Text("Français") },
-                            colors = MenuDefaults.itemColors(
-                                textColor = colorResource(R.color.text_color)
-                            )
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedLanguage = "it"
-                                editor.putString("language", "it").apply()
-                                setLocale(context, "it")
-                                isDropdownExpanded = false
-                            },
-                            text = { Text("Italiano") },
-                            colors = MenuDefaults.itemColors(
-                                textColor = colorResource(R.color.text_color)
-                            )
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedLanguage = "de"
-                                editor.putString("language", "de").apply()
-                                setLocale(context, "de")
-                                isDropdownExpanded = false
-                            },
-                            text = { Text("Deutsch") },
-                            colors = MenuDefaults.itemColors(
-                                textColor = colorResource(R.color.text_color)
-                            )
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedLanguage = "pt"
-                                editor.putString("language", "pt").apply()
-                                setLocale(context, "pt")
-                                isDropdownExpanded = false
-                            },
-                            text = { Text("Português") },
-                            colors = MenuDefaults.itemColors(
-                                textColor = colorResource(R.color.text_color)
-                            )
-                        )
-                    }
-                }
+                DropdownMenuItem(
+                    onClick = {
+                        onLanguageChange("es")
+                        isDropdownExpanded = false
+                    },
+                    text = { Text("Español") },
+                    colors = MenuDefaults.itemColors(
+                        textColor = colorResource(R.color.text_color)
+                    )
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        onLanguageChange("fr")
+                        isDropdownExpanded = false
+                    },
+                    text = { Text("Français") },
+                    colors = MenuDefaults.itemColors(
+                        textColor = colorResource(R.color.text_color)
+                    )
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        onLanguageChange("it")
+                        isDropdownExpanded = false
+                    },
+                    text = { Text("Italiano") },
+                    colors = MenuDefaults.itemColors(
+                        textColor = colorResource(R.color.text_color)
+                    )
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        onLanguageChange("de")
+                        isDropdownExpanded = false
+                    },
+                    text = { Text("Deutsch") },
+                    colors = MenuDefaults.itemColors(
+                        textColor = colorResource(R.color.text_color)
+                    )
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        onLanguageChange("pt")
+                        isDropdownExpanded = false
+                    },
+                    text = { Text("Português") },
+                    colors = MenuDefaults.itemColors(
+                        textColor = colorResource(R.color.text_color)
+                    )
+                )
             }
         }
     }

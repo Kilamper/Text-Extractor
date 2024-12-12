@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Text Extractor</string>
+    <string name="app_name" translatable="false">TextSnap</string>
     <string name="log_in">Log in</string>
     <string name="camera_image">Camera Image</string>
     <string name="capture_image">Capture Image</string>
