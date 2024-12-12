@@ -111,6 +111,16 @@ La aplicación desarrollada utiliza una arquitectura basada en los principios de
 
 ---
 
+## Posibles Ampliaciones
+
+- **Traducción del texto escaneado**:
+   - Implementar la posibilidad de traducir el texto una vez escaneado y permitir su almacenamiento con la traducción.
+
+- **Selección del recuadro a escanear**:
+   - Permitir al usuario seleccionar un recuadro dentro de la imagen para escanear solo el texto contenido en su interior.
+
+---
+
 ## Conclusiones
 
 Text Extractor es una aplicación versátil que combina tecnología avanzada con un diseño intuitivo. Durante el desarrollo, se logró superar los desafíos de integración de tecnologías y optimización de la interfaz, resultando en un producto que cumple con los objetivos planteados. La aplicación se encuentra lista para ser utilizada y ampliada en futuras iteraciones, según las necesidades de los usuarios.
