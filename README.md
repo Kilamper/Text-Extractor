@@ -32,6 +32,9 @@ El proyecto sigue una estructura organizada en las siguientes carpetas principal
    - **drawable**: Imágenes e íconos utilizados en la interfaz.
    - **menu**: Opciones para los diversos menús.
    - **values**: Archivos de configuración para idiomas y estilos de la aplicación.
+      - **colors**: Definiciones de los colores usados en la aplicación.
+      - **strings**: Estructura del texto de la aplicación en diferentes idiomas.
+      - **themes**: Definición del tema principal de la app, así como su versión oscura.
    - **mipmap**: Versiones del ícono de la aplicación adaptadas a diferentes densidades de pantalla.
 
 ---
@@ -72,7 +75,7 @@ Durante el desarrollo, el diseño de Text Extractor ha sido modificado con respe
 
 5. **Ajustes**:
    - Permite cambiar entre tema oscuro o claro.
-   - Ofrece configuración de idioma (inglés/español).
+   - Ofrece configuración de idioma (Inglés, Español, Francés, Italiano, Alemán y Portugués).
 
 6. **Ayuda**:
    - Incluye una sección de preguntas frecuentes para resolver dudas comunes sobre el uso de la aplicación.
@@ -83,7 +86,13 @@ Durante el desarrollo, el diseño de Text Extractor ha sido modificado con respe
    - Autenticación segura mediante Firebase Authentication.
 
 8. **Idioma predeterminado**:
-   - La aplicación detecta y adopta el idioma configurado en el dispositivo del usuario.
+   - La aplicación detecta y adopta el idioma configurado en el dispositivo del usuario, si este se encuentra en la selección disponible dentro de la app.
+
+---
+
+## Arquitectura Implementada
+
+La aplicación desarrollada utiliza una arquitectura basada en los principios de MVVM (Model-View-ViewModel), aunque no implementa un ViewModel de manera explícita. En lugar de ello, se apoya en algunos de los conceptos fundamentales de MVVM, como la separación de responsabilidades y la gestión del estado de la UI.
 
 ---
 
