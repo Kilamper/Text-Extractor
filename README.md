@@ -12,7 +12,7 @@ El proyecto tiene los siguientes objetivos principales:
 1. Desarrollar una aplicación móvil funcional y fácil de usar que aproveche capacidades nativas como la cámara y la gestión de almacenamiento.
 2. Implementar un sistema de registro e inicio de sesión seguro mediante Firebase Authentication.
 3. Diseñar e integrar una base de datos en la nube para almacenar el historial de textos escaneados.
-4. Ofrecer una experiencia multilingüe con soporte para inglés y español.
+4. Ofrecer una experiencia multilingüe con soporte para español, inglés, alemán, italiano, portugués y francés.
 5. Incorporar un diseño personalizable.
 6. Proveer opciones de personalización y ayuda para mejorar la experiencia del usuario.
 
@@ -92,7 +92,8 @@ Durante el desarrollo, el diseño de Text Extractor ha sido modificado con respe
 
 ## Arquitectura Implementada
 
-La aplicación desarrollada utiliza una arquitectura basada en los principios de MVVM (Model-View-ViewModel), aunque no implementa un ViewModel de manera explícita. En lugar de ello, se apoya en algunos de los conceptos fundamentales de MVVM, como la separación de responsabilidades y la gestión del estado de la UI.
+La aplicación desarrollada utiliza una arquitectura basada en los principios de MVVM (Model-View-ViewModel), aunque no implementa un ViewModel de manera explícita.
+En lugar de ello, se apoya en algunos de los conceptos fundamentales de MVVM, como la separación de responsabilidades y la gestión del estado de la UI.
 
 ---
 
@@ -118,6 +119,9 @@ La aplicación desarrollada utiliza una arquitectura basada en los principios de
 
 - **Selección del recuadro a escanear**:
    - Permitir al usuario seleccionar un recuadro dentro de la imagen para escanear solo el texto contenido en su interior.
+
+- **Soporte en alfabetos adicionales**:
+  - Permitir al usuario escanear texto en idiomas que no usen el alfabeto latino, como chino, japonés, coreano... 
 
 ---
 
