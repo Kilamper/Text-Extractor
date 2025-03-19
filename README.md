@@ -1,7 +1,7 @@
 # Memoria del Proyecto de Final de Curso - TextSnap
 
 ## Introducción
-Text Extractor es una aplicación móvil diseñada para escanear texto de imágenes y ofrecer varias funcionalidades, como copiarlo o guardarlo. Este proyecto busca aprovechar las características nativas de los dispositivos móviles, integrando tecnologías modernas y servicios en la nube.
+TextSnap es una aplicación móvil diseñada para escanear texto de imágenes y ofrecer varias funcionalidades, como copiarlo o guardarlo. Este proyecto busca aprovechar las características nativas de los dispositivos móviles, integrando tecnologías modernas y servicios en la nube.
 
 ---
 
